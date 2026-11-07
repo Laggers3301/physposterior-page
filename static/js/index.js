@@ -156,3 +156,31 @@
     }
   });
 })();
+
+/* ---------- agent comparison: 8 head views on one clock (default tab) + third-person gallery tab ---------- */
+(function () {
+  var H = window.PP_AGENT_HEADS, grid = document.getElementById("agh-grid");
+  if (!H || !grid || !window.PPSync) return;
+  var vids = H.map(function (h) {
+    var f = document.createElement("figure"); f.className = "vtile pp-card is-" + h.kind;
+    f.innerHTML = '<video class="pp-media" muted playsinline preload="none" poster="./static/posters/' + h.src + '.jpg" data-src="./static/videos/' + h.src + '.mp4"></video>' +
+      '<figcaption><span class="tag is-small tag-' + h.kind + '">' + h.kind + '</span> <b>' + h.name + '</b>' +
+      '<span class="agh-score">screws ' + h.screws + (h.ms ? " · milestones " + h.ms : "") + '</span>' + (h.note ? '<span class="agh-note">' + h.note + '</span>' : "") + '</figcaption>';
+    grid.appendChild(f); return f.querySelector("video");
+  });
+  var dur = 238.8, scrub = document.getElementById("agh-scrub"), tEl = document.getElementById("agh-time"), btn = document.getElementById("agh-play"), drag = false;
+  var g = window.PPSync.create(grid, vids, { rate: 4, onTick: function (t) {
+    if (!drag) scrub.value = Math.round(1000 * t / dur); tEl.textContent = t.toFixed(1) + " s / " + dur.toFixed(1) + " s"; btn.textContent = g.isPlaying() ? "Pause" : "Play"; } });
+  btn.onclick = function () { g.toggle(); };
+  document.getElementById("agh-rate").onclick = function (ev) { var b = ev.target.closest("button"); if (!b) return;
+    this.querySelectorAll("button").forEach(function (x) { x.classList.toggle("active", x === b); }); g.setRate(+b.dataset.r); };
+  scrub.addEventListener("input", function () { drag = true; g.seek(dur * scrub.value / 1000); });
+  scrub.addEventListener("change", function () { drag = false; });
+  var tabs = document.getElementById("ag-tabs");
+  tabs.onclick = function (ev) { var b = ev.target.closest("button"); if (!b) return;
+    tabs.querySelectorAll("button").forEach(function (x) { x.classList.toggle("active", x === b); });
+    var head = b.dataset.t === "head";
+    document.getElementById("ag-head").style.display = head ? "" : "none"; document.getElementById("ag-third").style.display = head ? "none" : "";
+    if (!head) g.pause(); };
+  window.PPAgentHeads = g;
+})();

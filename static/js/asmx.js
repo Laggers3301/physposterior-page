@@ -61,7 +61,7 @@
         vHead.style.display = hasH ? "" : "none"; headSoon.style.display = hasH ? "none" : "";
         var pairs = [[b + "showcase.mp4", q2 + "showcase.jpg"]], idx = [0];
         if (hasH) { pairs.push([b + "head_display.mp4", q2 + "head_display.jpg"]); idx.push(1); }
-        if (hasW) { pairs.push([b + "wrist.mp4", q2 + "wrist.jpg"]); idx.push(2); }
+        if (hasW) { pairs.push([b + "wrist_display.mp4", q2 + "wrist_display.jpg"]); idx.push(2); }
         grp.setSources(pairs, idx);
       }
       render();

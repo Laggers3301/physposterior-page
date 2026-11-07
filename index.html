@@ -518,7 +518,20 @@
       Each agent received the same inputs for the long-horizon precision assembly task, worked in an isolated container without the PhysPosterior framework,
       and was scored by the same independent scorer. Score = milestones completed, out of 5.
     </p>
+    <div class="seg" id="ag-tabs" style="margin-bottom:.8rem"><button data-t="head" class="active">Head camera</button><button data-t="third">Third-person</button></div>
+    <div id="ag-head">
+      <div class="tl-controls" style="margin-bottom:.6rem">
+        <button class="btn-plain" id="agh-play">Pause</button>
+        <span class="seg" id="agh-rate"><button data-r="1">1×</button><button data-r="4" class="active">4×</button><button data-r="8">8×</button></span>
+        <span class="time small muted" id="agh-time">0.0 s</span>
+      </div>
+      <input type="range" id="agh-scrub" min="0" max="1000" value="0" aria-label="agent head videos" style="width:100%;accent-color:#24292f;margin-bottom:.8rem">
+      <div class="agh-grid" id="agh-grid"></div>
+      <p class="small muted" style="margin-top:.6rem">All eight views use the same head camera as the real robot and the PhysPosterior reconstruction, on the teleoperation clock (238.8 s). Agent scenes are replayed from each agent's saved states with a common renderer; the camera is not moved to follow an agent's own robot base.</p>
+    </div>
+    <div id="ag-third" style="display:none">
     <div class="agent-grid" id="agent-grid"></div>
+    </div>
     <p class="lead has-text-centered" style="margin-top:1.4rem;max-width:860px;margin-left:auto;margin-right:auto">
       <b>Rebuilding one nominal scene is no longer enough. The hard part is knowing how far to trust it.</b>
     </p>
