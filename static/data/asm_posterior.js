@@ -1509,3 +1509,6 @@ window.PP_ASM = {
   "prior_success": "0/1"
  }
 };
+
+/* Clip ids (e.g. "E_slip_lift") whose wrist render asmp_<id>_wrist.mp4 exists; until listed, the wrist tile shows "wrist view rendering". */
+window.PP_ASM_WRIST = [];

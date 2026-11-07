@@ -486,3 +486,17 @@ table.pp-table.s2r-table th, table.pp-table.s2r-table td { white-space: normal; 
 .asm-side > figure.vtile.pp-card { min-height: 0; overflow: hidden; }
 @media (max-width: 768px) { .asm-side { contain: none; grid-template-rows: none; } }
 @media (max-width: 900px) { .asmx-plot { min-height: 0; } }
+
+/* AC-ONE teaser: columns = third person | head | wrist; rows = real | sim */
+.teaser-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
+.teaser-grid > figure > video.pp-media { aspect-ratio: 4 / 3; }
+.teaser-note { display: flex; flex-direction: column; justify-content: center; gap: .45rem; padding: 18px 20px; font-size: .95rem; line-height: 1.5; }
+.teaser-note .tag { align-self: flex-start; }
+@media (max-width: 768px) { .teaser-grid { grid-template-columns: 1fr 1fr; } .teaser-note { grid-column: 1 / -1; } }
+/* assembly explorer media: third person on top, head + wrist below, info line */
+.asmx-row { grid-template-columns: 1fr 1fr; flex: none; }
+.asmx-small .tri-soon { aspect-ratio: 16 / 9; border-radius: 10px; }
+.asmx-info { line-height: 1.5; }
+/* first screen: less padding so the AC-ONE teaser starts higher */
+section.hero:first-of-type > .hero-body { padding-top: 2.2rem; padding-bottom: .6rem; }
+.hero.teaser > .container > .hero-body { padding-top: .8rem; }

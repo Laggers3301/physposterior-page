@@ -62,19 +62,15 @@
 <section class="hero teaser">
   <div class="container is-max-widescreen">
     <div class="hero-body">
-      <div class="vgrid cols-3 stack-mobile" data-sync-group="teaser">
-        <figure class="vtile pp-card is-real">
-          <video class="pp-media" data-src="./static/videos/dex_real_body.mp4" poster="./static/posters/dex_real_body.jpg" muted playsinline preload="none"></video>
-          <figcaption><span class="tag is-small tag-real">real</span> <b>The recording.</b> A humanoid hand lifts a circuit board; in this take the board slips out during the carry.</figcaption>
-        </figure>
-        <figure class="vtile pp-card is-sim">
-          <video class="pp-media" data-src="./static/interactive/explorer/pcb/third_person/stress_mu0.15_f0.35_exo.mp4" poster="./static/posters/tp/pcb_stress_mu0.15_f0.35_exo.jpg" muted playsinline preload="none"></video>
-          <figcaption><span class="tag is-small tag-sim">sim</span> <b>World A</b> (μ 0.15, finger force 0.35): a weaker grip and a faster carry, and the board still arrives.</figcaption>
-        </figure>
-        <figure class="vtile pp-card is-sim">
-          <video class="pp-media" data-src="./static/interactive/explorer/pcb/third_person/stress_mu0.25_f0.20_exo.mp4" poster="./static/posters/tp/pcb_stress_mu0.25_f0.20_exo.jpg" muted playsinline preload="none"></video>
-          <figcaption><span class="tag is-small tag-sim">sim</span> <b>World B</b> (μ 0.25, finger force 0.20): the same action, and the board slips out during the carry.</figcaption>
-        </figure>
+      <div class="teaser-grid" data-sync-group="teaser">
+        <div class="pp-card is-real teaser-note"><span class="tag is-small tag-real">real</span>
+          <b>AC-ONE teleoperation</b><span>Pick up a circuit board, seat it, place a base, align it on posts and drive four screws — about three minutes, shown at 3× speed.</span>
+          <span class="muted small">The real robot has a head and a wrist camera; there is no third-person camera.</span></div>
+        <figure class="vtile pp-card is-real"><video class="pp-media" data-src="./static/videos/teaser_asm_real_head.mp4" poster="./static/posters/teaser_asm_real_head.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Head camera</figcaption></figure>
+        <figure class="vtile pp-card is-real"><video class="pp-media" data-src="./static/videos/teaser_asm_real_wrist.mp4" poster="./static/posters/teaser_asm_real_wrist.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Wrist camera</figcaption></figure>
+        <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/videos/teaser_asm_sim_exo.mp4" poster="./static/posters/teaser_asm_sim_exo.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-sim">sim</span> Reconstructed world, third person</figcaption></figure>
+        <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/videos/teaser_asm_sim_head.mp4" poster="./static/posters/teaser_asm_sim_head.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-sim">sim</span> Head camera</figcaption></figure>
+        <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/videos/teaser_asm_sim_wrist.mp4" poster="./static/posters/teaser_asm_sim_wrist.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-sim">sim</span> Wrist camera</figcaption></figure>
       </div>
       <p class="hero-tagline has-text-centered">
         <strong>Robots that try something once should know how far to trust the next action.</strong>
@@ -102,31 +98,43 @@
   </div>
 </section>
 
-<!-- ============================== METHOD ============================== -->
-<section class="section section-alt" id="method">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Method</h2>
-    <figure class="vtile pp-card ar-native">
-      <img class="pp-media" src="./static/images/framework_f1.jpg" alt="PhysPosterior framework: limited evidence, joint belief, executable worlds, new action, what it enables" loading="lazy">
-    </figure>
-    <div class="content lead" style="margin-top:1rem">
-      <ol>
-        <li><b>Infer.</b> From limited interaction, infer a distribution over physical parameters <i>and</i> observation errors, such as camera pose and clock offset.</li>
-        <li><b>Compile.</b> Each sample becomes a runnable simulation world with its parameters fixed for the whole rollout.</li>
-        <li><b>Use.</b> The same belief predicts the outcome of a new action, warns before execution when worlds disagree, and generates training data.</li>
-      </ol>
-    </div>
-  </div>
-</section>
-
 <!-- ============================== LONG-HORIZON PRECISION ASSEMBLY (main demo) ============================== -->
-<section class="section" id="pcb">
+<section class="section section-alt" id="pcb">
   <div class="container is-max-widescreen">
     <h2 class="title is-3 has-text-centered">Long-horizon precision assembly</h2>
     <p class="has-text-centered lead" style="max-width:920px;margin:0 auto 1.4rem">
       A factory-style precision fitting task with a single ARX X5 arm: pick up a circuit board, seat it in a fixture, place a base, align the board on its posts,
       and place four screws — about three minutes of contact-rich steps with sub-millimetre tolerances.
     </p>
+
+    <h3 class="title is-5 sub-h" style="margin-top:.4rem !important">Change the physics, see what happens <span class="tag is-small tag-sim">sim</span></h3>
+    <p class="small muted sub-lead">The gripper picks up the circuit board and seats it in the fixture. Each point is one executed world: friction and board mass change, and a weak grip can let the board slip. Pick a world to play it from three cameras.</p>
+    <div class="asmx-root" data-mode="w15">
+      <div class="seg" data-r="ds" style="margin-bottom:.7rem"></div>
+      <div class="asmx-head pp-card" data-r="head"></div>
+      <div class="asmx">
+        <div class="pp-card asmx-plot-card">
+          <svg data-r="plot" class="asmx-plot" role="img" aria-label="Executed worlds by friction and board mass"></svg>
+          <div class="asmx-legend small">
+            <span><svg width="14" height="14"><path d="M7 1 L8.6 5.2 L13 5.3 L9.6 8 L10.8 12.4 L7 9.8 L3.2 12.4 L4.4 8 L1 5.3 L5.4 5.2Z" fill="#7a828c"/></svg> true world</span>
+            <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#7a828c"/></svg> posterior draw</span>
+            <span><svg width="12" height="12"><rect x="1" y="1" width="10" height="10" rx="2" fill="#7a828c"/></svg> prior draw</span>
+            <span><i class="lg ok"></i> success</span><span><i class="lg bad"></i> failure</span>
+            <span><svg width="16" height="16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="#24292f" stroke-width="1.6" stroke-dasharray="3 2"/></svg> has a video (click)</span>
+          </div>
+        </div>
+        <div class="pp-card is-sim asmx-media" data-r="stage">
+          <div class="asmx-main"><video class="pp-media" data-r="show" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
+          <div class="asmx-row">
+            <div class="asmx-small"><video class="pp-media is-thumb" data-r="headcam" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+            <div class="asmx-small"><video class="pp-media is-thumb" data-r="wrist" muted playsinline preload="none" style="display:none"></video><div class="tri-soon" data-r="wrist-soon">wrist view rendering</div><span class="pip-lbl">wrist</span></div>
+          </div>
+          <div class="asmx-info small" data-r="info"></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="title is-5 sub-h">The full task, step by step</h3>
 
     <!-- third-person showcase (Blender) + wrist close-ups, one clock -->
     <div class="seg" id="asm-btns" style="margin-bottom:.7rem">
@@ -152,30 +160,6 @@
       <div class="stat"><div class="num">0.007 / 0.0064 mm</div><div class="lbl">board-on-post error, teleop episode 0 / 1 <span class="tag is-small tag-sim">sim</span></div></div>
       <div class="stat"><div class="num">≤ 0.028 / ≤ 0.024 mm</div><div class="lbl">screw lateral error, episode 0 / 1 <span class="tag is-small tag-sim">sim</span></div></div>
       <div class="stat"><div class="num">2 / 2</div><div class="lbl">teleop episodes reproduced <span class="tag is-small tag-sim">sim</span></div></div>
-    </div>
-
-    <h3 class="title is-5 sub-h">Change the physics, see what happens <span class="tag is-small tag-sim">sim</span></h3>
-    <p class="small muted sub-lead">The gripper picks up the circuit board and seats it in the fixture. Each point is one executed world: friction and board mass change, and a weak grip can let the board slip.</p>
-    <div class="seg" id="asmx-ds" style="margin-bottom:.7rem"></div>
-    <div class="asmx-head pp-card" id="asmx-head"></div>
-    <div class="asmx" id="asmx">
-      <div class="pp-card asmx-plot-card">
-        <svg id="asmx-plot" class="asmx-plot" role="img" aria-label="Executed worlds by friction and board mass"></svg>
-        <div class="asmx-legend small">
-          <span><svg width="14" height="14"><path d="M7 1 L8.6 5.2 L13 5.3 L9.6 8 L10.8 12.4 L7 9.8 L3.2 12.4 L4.4 8 L1 5.3 L5.4 5.2Z" fill="#7a828c"/></svg> true world</span>
-          <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#7a828c"/></svg> posterior draw</span>
-          <span><svg width="12" height="12"><rect x="1" y="1" width="10" height="10" rx="2" fill="#7a828c"/></svg> prior draw</span>
-          <span><i class="lg ok"></i> success</span><span><i class="lg bad"></i> failure</span>
-          <span><svg width="16" height="16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="#24292f" stroke-width="1.6" stroke-dasharray="3 2"/></svg> has a video (click)</span>
-        </div>
-      </div>
-      <div class="pp-card asmx-media" id="asmx-stage">
-        <div class="asmx-main"><video class="pp-media" id="asmx-show" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
-        <div class="asmx-row">
-          <div class="asmx-small"><video class="pp-media is-thumb" id="asmx-headcam" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
-          <div class="asmx-info small" id="asmx-info"></div>
-        </div>
-      </div>
     </div>
 
     <h3 class="title is-5" style="margin-top:2rem">The whole task, five cameras, one clock</h3>
@@ -213,6 +197,23 @@
       <figure class="vtile pp-card ar-43"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L009.mp4" poster="./static/posters/pcb_layout_L009.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L009 · parts near the demonstration</figcaption></figure>
     </div>
     <p class="small muted" style="margin-top:.4rem">Head camera, 4× speed. Each layout gets its own motion plan and simulation.</p>
+  </div>
+</section>
+
+<!-- ============================== METHOD ============================== -->
+<section class="section" id="method">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <figure class="vtile pp-card ar-native">
+      <img class="pp-media" src="./static/images/framework_f1.jpg" alt="PhysPosterior framework: limited evidence, joint belief, executable worlds, new action, what it enables" loading="lazy">
+    </figure>
+    <div class="content lead" style="margin-top:1rem">
+      <ol>
+        <li><b>Infer.</b> From limited interaction, infer a distribution over physical parameters <i>and</i> observation errors, such as camera pose and clock offset.</li>
+        <li><b>Compile.</b> Each sample becomes a runnable simulation world with its parameters fixed for the whole rollout.</li>
+        <li><b>Use.</b> The same belief predicts the outcome of a new action, warns before execution when worlds disagree, and generates training data.</li>
+      </ol>
+    </div>
   </div>
 </section>
 
@@ -257,13 +258,40 @@
     <h2 class="title is-3 has-text-centered">Posterior Explorer</h2>
     <p class="has-text-centered lead" style="max-width:900px;margin:0 auto 1.2rem">
       For this recording, the posterior puts its mass on these worlds, and its predicted success matches what happens; the prior does not.
-      Pick a world on the friction × finger-force grid, or draw eight worlds from the prior or the posterior.
+      Start with the assembly task, or switch to the humanoid tasks and pick a world on the friction × finger-force grid.
     </p>
     <div class="ctrl-row">
-      <span><span class="ctrl-label">Task</span><span class="seg" id="px-task"></span></span>
+      <span><span class="ctrl-label">Task</span><span class="seg" id="px-domain"></span><span class="seg" id="px-task" style="display:none"></span></span>
       <span><span class="ctrl-label">Action</span><span class="seg" id="px-action"></span></span>
       <span id="px-flag"></span>
     </div>
+    <div id="px-asm">
+    <div class="asmx-root" data-mode="hidden">
+      <div class="seg" data-r="ds" style="margin-bottom:.7rem"></div>
+      <div class="asmx-head pp-card" data-r="head"></div>
+      <div class="asmx">
+        <div class="pp-card asmx-plot-card">
+          <svg data-r="plot" class="asmx-plot" role="img" aria-label="Executed worlds by friction and board mass"></svg>
+          <div class="asmx-legend small">
+            <span><svg width="14" height="14"><path d="M7 1 L8.6 5.2 L13 5.3 L9.6 8 L10.8 12.4 L7 9.8 L3.2 12.4 L4.4 8 L1 5.3 L5.4 5.2Z" fill="#7a828c"/></svg> true world</span>
+            <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#7a828c"/></svg> posterior draw</span>
+            <span><svg width="12" height="12"><rect x="1" y="1" width="10" height="10" rx="2" fill="#7a828c"/></svg> prior draw</span>
+            <span><i class="lg ok"></i> success</span><span><i class="lg bad"></i> failure</span>
+            <span><svg width="16" height="16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="#24292f" stroke-width="1.6" stroke-dasharray="3 2"/></svg> has a video (click)</span>
+          </div>
+        </div>
+        <div class="pp-card is-sim asmx-media" data-r="stage">
+          <div class="asmx-main"><video class="pp-media" data-r="show" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
+          <div class="asmx-row">
+            <div class="asmx-small"><video class="pp-media is-thumb" data-r="headcam" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+            <div class="asmx-small"><video class="pp-media is-thumb" data-r="wrist" muted playsinline preload="none" style="display:none"></video><div class="tri-soon" data-r="wrist-soon">wrist view rendering</div><span class="pip-lbl">wrist</span></div>
+          </div>
+          <div class="asmx-info small" data-r="info"></div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div id="px-grid-ui">
     <div class="px">
       <div class="px-panel">
         <h5><span class="tag is-small tag-real">real</span> Recording</h5>
@@ -317,6 +345,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </section>
 
@@ -333,7 +362,7 @@
         <div class="tri-big"><video class="pp-media" data-src="./static/videos/dex_real_body.mp4" poster="./static/posters/dex_real_body.jpg" muted playsinline preload="none"></video><span class="pip-lbl">third person (EXO2)</span></div>
         <div class="tri-row">
           <div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_head.mp4" poster="./static/posters/dex_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
-          <div class="tri-small"><div class="tri-soon">wrist · Coming soon</div></div>
+          <div class="tri-small"><div class="tri-soon">wrist · coming soon</div></div>
         </div>
         <figcaption><span class="tag is-small tag-real">real</span> Teleoperated take: the board slips out of the hand during the carry. Background logos and text and the vest logo are blurred.</figcaption>
       </figure>
@@ -347,6 +376,13 @@
       </figure>
     </div>
     <div class="stat-row" style="justify-content:center;margin-top:1rem"><div class="stat"><div class="num">101 / 113</div><div class="lbl">layouts pass <span class="tag is-small tag-sim">sim</span></div></div></div>
+
+    <h3 class="title is-5 sub-h">Same recording, same new action, two worlds <span class="tag is-small tag-sim">sim</span></h3>
+    <div class="vgrid cols-3 stack-mobile" data-sync-group="dexpair">
+      <figure class="vtile pp-card is-real"><video class="pp-media" data-src="./static/videos/dex_real_body.mp4" poster="./static/posters/dex_real_body.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> <b>The recording.</b> The board slips out during the carry.</figcaption></figure>
+      <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/interactive/explorer/pcb/third_person/stress_mu0.15_f0.35_exo.mp4" poster="./static/posters/tp/pcb_stress_mu0.15_f0.35_exo.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-sim">sim</span> <b>World A</b> (μ 0.15, finger force 0.35): a weaker grip and a faster carry, and the board still arrives.</figcaption></figure>
+      <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/interactive/explorer/pcb/third_person/stress_mu0.25_f0.20_exo.mp4" poster="./static/posters/tp/pcb_stress_mu0.25_f0.20_exo.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-sim">sim</span> <b>World B</b> (μ 0.25, finger force 0.20): the same action, and the board slips out during the carry.</figcaption></figure>
+    </div>
 
     <h3 class="title is-5" style="margin-top:1.6rem">Query world 8 under a weak grip and a fast carry <span class="tag is-small tag-sim">sim</span></h3>
     <div class="columns is-vcentered">
@@ -376,7 +412,7 @@
         <div class="tri-big"><video class="pp-media" data-src="./static/videos/apple_real_head.mp4" poster="./static/posters/apple_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
         <div class="tri-row">
           <div class="tri-small"><div class="tri-soon">no third-person camera in this recording</div></div>
-          <div class="tri-small"><div class="tri-soon">wrist · Coming soon</div></div>
+          <div class="tri-small"><div class="tri-soon">wrist · coming soon</div></div>
         </div>
         <figcaption><span class="tag is-small tag-real">real</span> Grasp and lift, then the hand opens in the air and the apple drops.</figcaption>
       </figure>

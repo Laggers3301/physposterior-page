@@ -255,6 +255,24 @@
     $("px-draw-prior").onclick = function () { draw("prior"); };
     $("px-draw-post").onclick = function () { draw("posterior"); };
     setTask(D.tasks[0]);
+    buildDomains();
+  }
+
+  // top-level task tabs: Precision assembly (default, scatter view of #px-asm) + the grid tasks
+  function buildDomains() {
+    var dom = $("px-domain"), asm = $("px-asm"), gridUI = $("px-grid-ui"), act = $("px-action").parentNode;
+    if (!dom) return;
+    dom.innerHTML = "";
+    var items = [{ id: "asm", label: "Precision assembly" }].concat(D.tasks.map(function (t) { return { id: t.id, label: t.label, t: t }; }));
+    function show(it) {
+      dom.querySelectorAll("button").forEach(function (b) { b.classList.toggle("active", b.dataset.id === it.id); });
+      var isAsm = it.id === "asm";
+      if (asm) asm.style.display = isAsm ? "" : "none";
+      gridUI.style.display = isAsm ? "none" : ""; act.style.display = isAsm ? "none" : "";
+      if (!isAsm) setTask(it.t);
+    }
+    items.forEach(function (it) { var b = document.createElement("button"); b.textContent = it.label; b.dataset.id = it.id; b.onclick = function () { show(it); }; dom.appendChild(b); });
+    show(asm ? items[0] : items[1]);
   }
 
   function siteModel(byTask) {
