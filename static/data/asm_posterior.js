@@ -1511,4 +1511,6 @@ window.PP_ASM = {
 };
 
 /* Clip ids (e.g. "E_slip_lift") whose wrist render asmp_<id>_wrist.mp4 exists; until listed, the wrist tile shows "wrist view rendering". */
-window.PP_ASM_WRIST = [];
+window.PP_ASM_WRIST = ["A_seated_ok", "B_lowmu_pass", "C_marginal_seat", "D_seat_unsupported", "E_slip_lift", "F_slip_carry"];
+/* Clip ids whose corrected head render asmp_<id>_head_display.mp4 exists (the earlier *_head.mp4 renders were upside down and are not used). */
+window.PP_ASM_HEAD = ["A_seated_ok", "B_lowmu_pass", "C_marginal_seat", "D_seat_unsupported", "E_slip_lift", "F_slip_carry"];

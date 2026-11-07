@@ -7,16 +7,16 @@
   "use strict";
   var D = window.PP_ASM;
   if (!D || !window.PPSync) return;
-  var WRIST = window.PP_ASM_WRIST || [];
+  var WRIST = window.PP_ASM_WRIST || [], HEAD = window.PP_ASM_HEAD || [];
   var NS = "http://www.w3.org/2000/svg";
   var FAIL = { IN_HAND_SLIP: "board slips in the gripper", GATE_FAILED: "seat check fails" };
-  var STG = { s03_lift_pcb: "during the lift", s04_carry_pcb: "during the carry", s05_release_pcb_seat: "at the seat" };
+  var STG = { s03_lift_pcb: "during the lift", s04_carry_pcb: "during the carry", s04_seat_pcb_a_carry: "during the carry", s05_release_pcb_seat: "at the seat" };
   var pct = function (x) { return Math.round(100 * x) + "%"; };
 
   function mount(root) {
     var q = function (r) { return root.querySelector('[data-r="' + r + '"]'); };
     var svg = q("plot"), head = q("head"), info = q("info"), dsBox = q("ds"), stage = q("stage");
-    var vShow = q("show"), vHead = q("headcam"), vWrist = q("wrist"), wristSoon = q("wrist-soon");
+    var vShow = q("show"), vHead = q("headcam"), vWrist = q("wrist"), wristSoon = q("wrist-soon"), headSoon = q("head-soon");
     var grp = window.PPSync.create(stage, [vShow, vHead, vWrist], {});
     var X0 = 0.15, X1 = 1.15, Y0 = 19, Y1 = 41, W = 520, H = 380, L = 54, R = 14, T = 14, BOT = 46;
     var sx = function (x) { return L + (x - X0) / (X1 - X0) * (W - L - R); };
@@ -56,10 +56,13 @@
         (p.clip ? "" : ' <span class="muted">· no rendered clip for this run; outlined points have one</span>');
       if (p.clip) {
         var b = "./static/videos/asmp_" + p.clip + "_", q2 = "./static/posters/asmp_" + p.clip + "_";
-        var hasW = WRIST.indexOf(p.clip) >= 0;
+        var hasW = WRIST.indexOf(p.clip) >= 0, hasH = HEAD.indexOf(p.clip) >= 0;
         vWrist.style.display = hasW ? "" : "none"; wristSoon.style.display = hasW ? "none" : "";
-        if (hasW) grp.setSources([[b + "showcase.mp4", q2 + "showcase.jpg"], [b + "head.mp4", q2 + "head.jpg"], [b + "wrist.mp4", q2 + "wrist.jpg"]], [0, 1, 2]);
-        else grp.setSources([[b + "showcase.mp4", q2 + "showcase.jpg"], [b + "head.mp4", q2 + "head.jpg"]], [0, 1]);
+        vHead.style.display = hasH ? "" : "none"; headSoon.style.display = hasH ? "none" : "";
+        var pairs = [[b + "showcase.mp4", q2 + "showcase.jpg"]], idx = [0];
+        if (hasH) { pairs.push([b + "head_display.mp4", q2 + "head_display.jpg"]); idx.push(1); }
+        if (hasW) { pairs.push([b + "wrist.mp4", q2 + "wrist.jpg"]); idx.push(2); }
+        grp.setSources(pairs, idx);
       }
       render();
     }
