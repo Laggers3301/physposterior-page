@@ -309,7 +309,8 @@
       </div>
       <div class="px-panel">
         <h5><span class="tag is-small tag-sim">sim</span> Selected world</h5>
-        <video id="px-world" class="pp-media" muted playsinline preload="none"></video>
+        <div class="px-rec-extra" style="margin-top:0"><video id="px-world" class="pp-media" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+        <div class="px-rec-extra"><video id="px-world-wrist" class="pp-media" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div>
         <div class="slider-row"><label for="px-mu">Friction μ</label><input type="range" id="px-mu" min="0" max="5" step="1" value="2"><output id="px-mu-out"></output></div>
         <div class="slider-row"><label for="px-f">Finger force</label><input type="range" id="px-f" min="0" max="4" step="1" value="2"><output id="px-f-out"></output></div>
         <dl class="px-readout">

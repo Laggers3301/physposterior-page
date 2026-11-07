@@ -9,7 +9,7 @@
   if (!D || !window.PPSync) return;
   var WRIST = window.PP_ASM_WRIST || [], HEAD = window.PP_ASM_HEAD || [];
   var NS = "http://www.w3.org/2000/svg";
-  var FAIL = { IN_HAND_SLIP: "board slips in the gripper", GATE_FAILED: "seat check fails" };
+  var FAIL = { IN_HAND_SLIP: "board slips in the gripper", GATE_FAILED: "release check fails" };
   var STG = { s03_lift_pcb: "during the lift", s04_carry_pcb: "during the carry", s04_seat_pcb_a_carry: "during the carry", s05_release_pcb_seat: "at the seat" };
   var pct = function (x) { return Math.round(100 * x) + "%"; };
 
@@ -73,7 +73,7 @@
       mark(g, d.truth, "truth", play);
       var t = d.truth, ps = d.post.filter(function (p) { return p.ok; }).length, pr = d.prior.filter(function (p) { return p.ok; }).length;
       head.innerHTML = "<b>Query world " + d.query_world + "</b> (μ " + t.mu.toFixed(2) + ", " + t.mass_g.toFixed(0) + " g), teleop episode 0 action. " +
-        "Posterior draws succeed in <b>" + count(d.post) + "</b>" + (d.prior.length ? ", prior draws in <b>" + count(d.prior) + "</b>" : "") +
+        "Posterior draws succeed in <b>" + count(d.post) + "</b>" + (d.prior.length ? ", prior draws in <b>" + count(d.prior) + "</b>" : ", prior draws not run for this world") +
         "; in the true world the run <b class=\"" + (t.ok ? "badge-ok" : "badge-bad") + "\">" + (t.ok ? "succeeds" : "fails") + "</b>" +
         (!t.ok && d.prior.length && ps < d.post.length / 2 && pr > d.prior.length / 2 ? ". The posterior predicts the failure; the prior does not." : ".");
     }
@@ -88,14 +88,15 @@
         h.worlds[selW].post.forEach(function (p) { mark(g, p, "post", play); });
       }
       h.worlds.forEach(function (w, k) {
-        var e = mark(g, w.truth, "truth", function () { selW = k; selRun = w.truth; info.innerHTML = worldInfo(w); render(); });
+        var e = mark(g, w.truth, "truth", function () { selW = k; if (w.truth.clip) play(w.truth, "truth"); selRun = w.truth; info.innerHTML = worldInfo(w); render(); });
         if (selW === k) e.classList.add("sel");
       });
       var sp = h.score_post, sq = h.score_prior, fails = h.worlds.filter(function (w) { return !w.truth.ok; });
       var lo = Math.min.apply(null, fails.map(function (w) { return w.p_post; })), hi = Math.max.apply(null, fails.map(function (w) { return w.p_post; }));
       head.innerHTML = "<b>16 sealed hidden worlds</b>, teleop episode 1 action: " + Math.round(16 * sp.actual_success_rate) + " / 16 succeed. " +
         "Posterior mean prediction <b>" + sp.mean_predicted.toFixed(2) + "</b> (Brier <b>" + sp.brier.toFixed(3) + "</b>); prior <b>" + sq.mean_predicted.toFixed(2) + "</b> (Brier " + sq.brier.toFixed(3) + "). " +
-        "In the " + fails.length + " low-friction worlds that fail, the posterior gives " + lo.toFixed(2) + "–" + hi.toFixed(2) + ", the prior " + h.p_prior.toFixed(2) + ". Click a star to show its draws.";
+        "In the " + fails.length + " low-friction worlds that fail, the posterior gives " + lo.toFixed(2) + "–" + hi.toFixed(2) + ", the prior " + h.p_prior.toFixed(2) + ". Click a star to show its draws; outlined points have a video." +
+        ' <span class="muted small">Outcome = the PPBench seat check. PP\'s own release check now uses each world\'s board mass (it previously assumed 30 g); after re-running the affected executions both checks agree on all 160 runs.</span>';
     }
     function render() { if (mode === "hidden") renderHidden(); else renderEp0(D[mode]); }
 
@@ -104,7 +105,7 @@
       mode = m; selW = null; selRun = null;
       dsBox.querySelectorAll("button").forEach(function (x) { x.classList.toggle("active", x.dataset.m === m); });
       if (m !== "hidden") play(D[m].truth, "truth");
-      else { info.innerHTML = '<span class="muted">Rendered clips exist for query worlds 15 and 5. The playing clip stays until you pick one there.</span>'; render(); }
+      else { info.innerHTML = '<span class="muted">12 runs have videos (outlined). Click one to play it.</span>'; render(); }
     }
     MODES.forEach(function (m) {
       var b = document.createElement("button"); b.textContent = m[1]; b.dataset.m = m[0];

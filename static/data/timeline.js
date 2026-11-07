@@ -9,11 +9,11 @@ window.PP_TIMELINE = {
   duration_s: 171.667,
   master: "sim_head",
   streams: [
-    { id: "real_head",  label: "Real · head",     kind: "real", src: "./static/videos/pcbs_real_head_s.mp4",  poster: "./static/posters/pcbs_real_head.jpg" },
-    { id: "sim_head",   label: "Sim · head",      kind: "sim",  src: "./static/videos/pcbs_sim_head.mp4",   poster: "./static/posters/pcbs_sim_head.jpg" },
-    { id: "sim_exo",    label: "Sim · external",  kind: "sim",  src: "./static/videos/pcbs_sim_exo.mp4",    poster: "./static/posters/pcbs_sim_exo.jpg" },
-    { id: "real_wrist", label: "Real · wrist",    kind: "real", src: "./static/videos/pcbs_real_wrist_s.mp4", poster: "./static/posters/pcbs_real_wrist.jpg" },
-    { id: "sim_wrist",  label: "Sim · wrist",     kind: "sim",  src: "./static/videos/pcbs_sim_wrist_s.mp4",  poster: "./static/posters/pcbs_sim_wrist.jpg" }
+    { id: "real_head",  label: "Real · head",     kind: "real", src: "./static/videos/pcbs_real_head_w.mp4",  poster: "./static/posters/pcbs_real_head.jpg" },
+    { id: "sim_head",   label: "Sim · head",      kind: "sim",  src: "./static/videos/pcbs_sim_head_w.mp4",   poster: "./static/posters/pcbs_sim_head.jpg" },
+    { id: "sim_exo",    label: "Sim · external",  kind: "sim",  src: "./static/videos/pcbs_sim_exo_w.mp4",    poster: "./static/posters/pcbs_sim_exo.jpg" },
+    { id: "real_wrist", label: "Real · wrist",    kind: "real", src: "./static/videos/pcbs_real_wrist_w.mp4", poster: "./static/posters/pcbs_real_wrist.jpg" },
+    { id: "sim_wrist",  label: "Sim · wrist",     kind: "sim",  src: "./static/videos/pcbs_sim_wrist_w.mp4",  poster: "./static/posters/pcbs_sim_wrist.jpg" }
   ],
   events: [
     { label: "Grasp board",    t: 11.333 },
@@ -38,11 +38,11 @@ window.PP_TIMELINE_EP1 = {
   master: "sim_head",
   stats: "Episode 1: board-on-post error <b>0.0064 mm</b>, screw lateral error <b>≤ 0.024 mm</b>",
   streams: [
-    { id: "real_head",  label: "Real · head",    src: "./static/videos/pcbs1_real_head_s.mp4",  poster: "./static/posters/pcbs1_real_head.jpg" },
-    { id: "sim_head",   label: "Sim · head",     src: "./static/videos/pcbs1_sim_head.mp4",   poster: "./static/posters/pcbs1_sim_head.jpg" },
-    { id: "sim_exo",    label: "Sim · external", src: "./static/videos/pcbs1_sim_exo.mp4",    poster: "./static/posters/pcbs1_sim_exo.jpg" },
-    { id: "real_wrist", label: "Real · wrist",   src: "./static/videos/pcbs1_real_wrist_s.mp4", poster: "./static/posters/pcbs1_real_wrist.jpg" },
-    { id: "sim_wrist",  label: "Sim · wrist",    src: "./static/videos/pcbs1_sim_wrist_s.mp4",  poster: "./static/posters/pcbs1_sim_wrist.jpg" }
+    { id: "real_head",  label: "Real · head",    src: "./static/videos/pcbs1_real_head_w.mp4",  poster: "./static/posters/pcbs1_real_head.jpg" },
+    { id: "sim_head",   label: "Sim · head",     src: "./static/videos/pcbs1_sim_head_w.mp4",   poster: "./static/posters/pcbs1_sim_head.jpg" },
+    { id: "sim_exo",    label: "Sim · external", src: "./static/videos/pcbs1_sim_exo_w.mp4",    poster: "./static/posters/pcbs1_sim_exo.jpg" },
+    { id: "real_wrist", label: "Real · wrist",   src: "./static/videos/pcbs1_real_wrist_w.mp4", poster: "./static/posters/pcbs1_real_wrist.jpg" },
+    { id: "sim_wrist",  label: "Sim · wrist",    src: "./static/videos/pcbs1_sim_wrist_w.mp4",  poster: "./static/posters/pcbs1_sim_wrist.jpg" }
   ],
   events: [
     { label: "Grasp board",    t: 10.967 },

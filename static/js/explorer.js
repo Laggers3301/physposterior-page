@@ -69,7 +69,9 @@
   var vReal = $("px-real"), vWorld = $("px-world");
   // real recording + selected world share one clock (static/js/sync.js); clips of a different length loop on their own
   var vBody = $("px-real-body");
-  var grp = window.PPSync.create(root.querySelector(".px"), [vReal, vWorld, vBody], {});
+  var vWW = $("px-world-wrist");
+  // recording (24 s) and grid worlds (20-24 s) run on one normalised clock; the world's head and wrist share its length
+  var grp = window.PPSync.create(root.querySelector(".px"), [vReal, vWorld, vBody, vWW], { normalize: true });
   var isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   function fmt(x, d) { return (x === null || x === undefined || x === "") ? "—" : (typeof x === "number" ? x.toFixed(d) : String(x).replace(/_/g, " ")); }
@@ -147,7 +149,7 @@
     $("px-mu").value = i; $("px-f").value = j;
     $("px-mu-out").textContent = muLabel(i); $("px-f-out").textContent = fLabel(j);
     var c = action.cells[i][j];
-    if (c.video) grp.setSource(1, c.video, c.poster);
+    if (c.video) { grp.setSource(1, c.video, c.poster); grp.setSource(3, D.placeholder ? c.video : c.video.replace(/\.mp4$/, "_wrist.mp4"), null); }
     var o = $("px-outcome");
     o.textContent = c.success === true ? "Success" : c.success === false ? "Failure" : "—";
     o.className = c.success === true ? "badge-ok" : c.success === false ? "badge-bad" : "";
@@ -229,8 +231,10 @@
     seg($("px-task"), D.tasks, t.id, setTask);
     $("px-mu").max = t.nI - 1; $("px-f").max = t.nJ - 1;
     if (t.real.video) grp.setSource(0, t.real.video, t.real.poster);
-    var body = { pcb: ["./static/videos/dex_real_body.mp4", "./static/posters/dex_real_body.jpg"] }[t.id];
-    vBody.parentNode.querySelector(".pip-lbl").style.display = body ? "" : "none";
+    // second real view: third person for the dexterous take; the apple take has no third-person camera, so its wrist view
+    var body = { pcb: ["./static/videos/dex_real_body_raw.mp4", "./static/posters/dex_real_body_raw.jpg", "third person"],
+                 apple: ["./static/videos/apple_real_wrist_raw.mp4", "./static/posters/apple_real_wrist_raw.jpg", "wrist"] }[t.id];
+    var lbl = vBody.parentNode.querySelector(".pip-lbl"); lbl.style.display = body ? "" : "none"; if (body) lbl.textContent = body[2];
     vBody.style.display = body ? "" : "none"; $("px-real-nobody").style.display = body ? "none" : "";
     grp.setSource(2, body ? body[0] : t.real.video, body ? body[1] : t.real.poster);
     $("px-real-note").textContent = t.real.outcome;
