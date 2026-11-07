@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PhysPosterior: infer a distribution over executable physical worlds from a short robot interaction.">
+  <meta name="robots" content="noindex">
+  <!-- document.title is filled from the #pp-title heading by static/js/index.js -->
+  <title>PhysPosterior</title>
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/playground/playground.css">
+</head>
+<body>
+
+<!-- ============================== HERO ============================== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+      <!-- TITLE: edit only here. <title> and the BibTeX entry are generated from this heading. -->
+      <h1 class="title is-1 publication-title" id="pp-title">PhysPosterior: Joint Physical-Observation Posteriors for Real-to-Sim-to-Real</h1>
+
+      <!-- AUTHORS: edit only here. The BibTeX author list is generated from .author-name. -->
+      <div class="publication-authors" id="pp-authors">
+        <span class="author-block"><span class="author-name">Yijun Guo</span><sup>1</sup>,</span>
+        <span class="author-block"><span class="author-name">Yuhua Jiang</span><sup>2</sup>,</span>
+        <span class="author-block"><span class="author-name">Guanyu Lu</span><sup>1</sup>,</span>
+        <span class="author-block"><span class="author-name">Zhirui Feng</span><sup>3</sup>,</span>
+        <span class="author-block"><span class="author-name">Xuran Wang</span><sup>1</sup>,</span>
+        <span class="author-block"><span class="author-name">Hongbing Yang</span><sup>2</sup>,</span>
+        <span class="author-block"><span class="author-name">Qinyu Zhang</span><sup>4</sup>,</span>
+        <span class="author-block"><span class="author-name">Junjie Lu</span><sup>5</sup>,</span>
+        <span class="author-block"><span class="author-name">Yiran Zhu</span><sup>6</sup>,</span>
+        <span class="author-block"><span class="author-name">Ming Wu</span><sup>7</sup></span>
+      </div>
+      <div class="publication-affils">
+        <span class="author-block"><sup>1</sup>University of the Chinese Academy of Sciences</span>
+        <span class="author-block"><sup>2</sup>Tsinghua University</span>
+        <span class="author-block"><sup>3</sup>Sun Yat-sen University</span>
+        <span class="author-block"><sup>4</sup>Zhejiang University</span>
+        <span class="author-block"><sup>5</sup>University of Technology Sydney</span>
+        <span class="author-block"><sup>6</sup>North China Electric Power University</span>
+        <span class="author-block"><sup>7</sup>China University of Mining and Technology (Beijing)</span>
+      </div>
+
+      <div class="publication-links">
+        <span class="link-block"><a class="button is-normal is-rounded is-dark is-soon" aria-disabled="true">
+          <span class="icon"><svg viewBox="0 0 384 512"><path d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"/></svg></span>
+          <span>Paper</span><span class="soon">coming soon</span></a></span>
+        <span class="link-block"><a class="button is-normal is-rounded is-dark is-soon" aria-disabled="true">
+          <span class="icon"><svg viewBox="0 0 576 512"><path d="M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6C14.9 167 14.9 256.4 14.9 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2-142.7 81.2z"/></svg></span>
+          <span>Video</span><span class="soon">coming soon</span></a></span>
+        <span class="link-block"><a class="button is-normal is-rounded is-dark is-soon" aria-disabled="true">
+          <span class="icon"><svg viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 82 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z"/></svg></span>
+          <span>Code</span><span class="soon">coming soon</span></a></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== TEASER ============================== -->
+<section class="hero teaser">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <div class="vgrid cols-3 stack-mobile" data-sync-group="teaser">
+        <figure class="vtile pp-card is-real">
+          <video class="pp-media" data-src="./static/videos/dex_real_body.mp4" poster="./static/posters/dex_real_body.jpg" muted playsinline preload="none"></video>
+          <figcaption><span class="tag is-small tag-real">real</span> <b>The recording.</b> A humanoid hand lifts a circuit board; in this take the board slips out during the carry.</figcaption>
+        </figure>
+        <figure class="vtile pp-card is-sim">
+          <video class="pp-media" data-src="./static/interactive/explorer/pcb/third_person/stress_mu0.15_f0.35_exo.mp4" poster="./static/posters/tp/pcb_stress_mu0.15_f0.35_exo.jpg" muted playsinline preload="none"></video>
+          <figcaption><span class="tag is-small tag-sim">sim</span> <b>World A</b> (μ 0.15, finger force 0.35): a weaker grip and a faster carry, and the board still arrives.</figcaption>
+        </figure>
+        <figure class="vtile pp-card is-sim">
+          <video class="pp-media" data-src="./static/interactive/explorer/pcb/third_person/stress_mu0.25_f0.20_exo.mp4" poster="./static/posters/tp/pcb_stress_mu0.25_f0.20_exo.jpg" muted playsinline preload="none"></video>
+          <figcaption><span class="tag is-small tag-sim">sim</span> <b>World B</b> (μ 0.25, finger force 0.20): the same action, and the board slips out during the carry.</figcaption>
+        </figure>
+      </div>
+      <p class="hero-tagline has-text-centered">
+        <strong>Robots that try something once should know how far to trust the next action.</strong>
+        PhysPosterior infers a distribution over physical worlds from a short interaction and runs each of them, so disagreement on a new action is visible before execution.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ABSTRACT ============================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered"><div class="column is-four-fifths">
+      <h2 class="title is-3">Abstract</h2>
+      <div class="content has-text-justified lead">
+        <p>
+          Real-to-sim pipelines usually return a single reconstructed scene. A short interaction, however, rarely pins down friction, mass, or contact,
+          and small errors in the camera or the clock can look like physics. PhysPosterior keeps this ambiguity instead of collapsing it.
+          It infers a joint posterior over physical parameters and observation errors, compiles every sample into an executable simulation world,
+          and runs a new action in all of them. Where the worlds disagree, the risk is visible before the robot acts, and the same belief
+          also produces physics-conditioned training data.
+        </p>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- ============================== METHOD ============================== -->
+<section class="section section-alt" id="method">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+    <figure class="vtile pp-card">
+      <img class="pp-media" src="./static/images/framework_f1.jpg" alt="PhysPosterior framework: limited evidence, joint belief, executable worlds, new action, what it enables" loading="lazy">
+    </figure>
+    <div class="content lead" style="margin-top:1rem">
+      <ol>
+        <li><b>Infer.</b> From limited interaction, infer a distribution over physical parameters <i>and</i> observation errors, such as camera pose and clock offset.</li>
+        <li><b>Compile.</b> Each sample becomes a runnable simulation world with its parameters fixed for the whole rollout.</li>
+        <li><b>Use.</b> The same belief predicts the outcome of a new action, warns before execution when worlds disagree, and generates training data.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== LONG-HORIZON PRECISION ASSEMBLY (main demo) ============================== -->
+<section class="section" id="pcb">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Long-horizon precision assembly</h2>
+    <p class="has-text-centered lead" style="max-width:920px;margin:0 auto 1.4rem">
+      A factory-style precision fitting task with a single ARX X5 arm: pick up a circuit board, seat it in a fixture, place a base, align the board on its posts,
+      and place four screws — about three minutes of contact-rich steps with sub-millimetre tolerances.
+    </p>
+
+    <!-- third-person showcase (Blender) + wrist close-ups, one clock -->
+    <div class="seg" id="asm-btns" style="margin-bottom:.7rem">
+      <button data-c="grasp_pcb" class="active">Grasp board</button>
+      <button data-c="seat_pcb">Seat board</button>
+      <button data-c="align_posts">Align on posts</button>
+      <button data-c="place_screw1">Place screw</button>
+      <button data-c="finish">Finish</button>
+      <button data-c="orbit">Orbit</button>
+    </div>
+    <div class="asm-stage" id="asm-group">
+      <figure class="vtile pp-card is-sim asm-main">
+        <video class="pp-media" id="asm-show" data-src="./static/videos/asm_grasp_pcb_show.mp4" poster="./static/posters/asm_grasp_pcb_show.jpg" muted playsinline preload="none"></video>
+        <figcaption><span class="tag is-small tag-sim">sim</span> <span id="asm-cap">Third-person view of the reconstructed world.</span></figcaption>
+      </figure>
+      <div class="asm-side" id="asm-side">
+        <figure class="vtile pp-card is-real"><video class="pp-media" id="asm-rw" data-src="./static/videos/asm_grasp_pcb_realwrist.mp4" poster="./static/posters/asm_grasp_pcb_realwrist.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Wrist camera, teleoperation.</figcaption></figure>
+        <figure class="vtile pp-card is-sim"><video class="pp-media" id="asm-sw" data-src="./static/videos/asm_grasp_pcb_simwrist.mp4" poster="./static/posters/asm_grasp_pcb_simwrist.jpg" muted playsinline preload="none"></video><figcaption><span class="tag is-small tag-sim">sim</span> Wrist camera, reconstructed world.</figcaption></figure>
+      </div>
+    </div>
+    <div class="stat-row" style="justify-content:center;margin-top:1rem">
+      <div class="stat"><div class="num">44 / 49</div><div class="lbl">layouts qualified <span class="tag is-small tag-sim">sim</span></div></div>
+      <div class="stat"><div class="num">0.007 mm</div><div class="lbl">board-on-post error <span class="tag is-small tag-sim">sim</span></div></div>
+      <div class="stat"><div class="num">≤ 0.028 mm</div><div class="lbl">screw lateral error <span class="tag is-small tag-sim">sim</span></div></div>
+    </div>
+
+    <h3 class="title is-5" style="margin-top:2rem">The whole task, five cameras, one clock</h3>
+    <div class="only-desktop" id="tl">
+      <div class="tl-grid" id="tl-grid"></div>
+      <div class="tl-bar">
+        <div class="tl-controls">
+          <button class="btn-plain" id="tl-play">Pause</button>
+          <span class="seg" id="tl-rate"><button data-r="1">1×</button><button data-r="2">2×</button><button data-r="4" class="active">4×</button></span>
+          <span class="time" id="tl-time">0.0 s</span>
+          <span id="tl-flag"></span>
+        </div>
+        <div class="tl-track">
+          <div class="tl-marks" id="tl-marks"></div>
+          <input type="range" id="tl-scrub" min="0" max="1000" value="0" step="1" aria-label="timeline">
+        </div>
+        <div class="tl-events" id="tl-events"></div>
+      </div>
+      <p class="small muted" style="margin-top:.6rem">Real views are re-timed onto the simulation clock with an event-anchored frame map; every view shows frame k at k/30 s.</p>
+    </div>
+    <div class="only-mobile">
+      <figure class="vtile pp-card is-real">
+        <video class="lazy pp-media" data-src="./static/videos/pcb_2x2_3x.mp4" poster="./static/posters/pcb_2x2_3x.jpg" muted loop playsinline preload="none"></video>
+        <figcaption>Left: <span class="tag is-small tag-real">real</span> teleoperation; right: <span class="tag is-small tag-sim">sim</span> reconstruction. Top: head camera; bottom: wrist camera. 3× speed.</figcaption>
+      </figure>
+    </div>
+
+    <h3 class="title is-5" style="margin-top:2rem">Change the physics, see what happens</h3>
+    <p class="small muted" style="margin:-.4rem 0 .8rem">The same assembly motion executed in posterior worlds with different friction and mass; each run is marked with how far it gets.</p>
+    <div class="cs-grid">
+      <div class="pp-card cs-card"><div class="cs-frame"><span>Coming soon</span></div><div class="cs-meta"><b>Lower friction</b><span class="s2r-pill">Coming soon</span></div></div>
+      <div class="pp-card cs-card"><div class="cs-frame"><span>Coming soon</span></div><div class="cs-meta"><b>Heavier board</b><span class="s2r-pill">Coming soon</span></div></div>
+      <div class="pp-card cs-card"><div class="cs-frame"><span>Coming soon</span></div><div class="cs-meta"><b>Higher friction</b><span class="s2r-pill">Coming soon</span></div></div>
+    </div>
+
+    <h3 class="title is-5" style="margin-top:2rem">Other layouts <span class="tag is-small tag-sim">sim</span></h3>
+    <div class="vgrid cols-4">
+      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L000.mp4" poster="./static/posters/pcb_layout_L000.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L000 · parts near the demonstration</figcaption></figure>
+      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L002.mp4" poster="./static/posters/pcb_layout_L002.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L002 · parts and fixture moved</figcaption></figure>
+      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L004.mp4" poster="./static/posters/pcb_layout_L004.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L004 · wider part spread</figcaption></figure>
+      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L009.mp4" poster="./static/posters/pcb_layout_L009.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L009 · parts near the demonstration</figcaption></figure>
+    </div>
+    <p class="small muted" style="margin-top:.4rem">Head camera, 4× speed. Each layout gets its own motion plan and simulation.</p>
+  </div>
+</section>
+
+<!-- ============================== PHYSICS PLAYGROUND (embedded; module owned by static/playground/) ============================== -->
+<section class="section section-alt" id="playground">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Physics playground</h2>
+    <p class="has-text-centered lead" style="max-width:860px;margin:0 auto 1.2rem">
+      Change the action and your browser re-simulates posterior worlds, prior worlds and the true world in MuJoCo, side by side.
+    </p>
+    <div id="pp-playground-slot"><img src="./static/playground/fallback_desktop.png" alt="Physics playground" style="width:100%;border-radius:14px"></div>
+  </div>
+</section>
+
+<!-- ============================== PHYSICAL PROPERTY DEMOS ============================== -->
+<section class="section" id="physical">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Physical-property demos <span class="tag is-small tag-real">real</span></h2>
+    <p class="has-text-centered lead" style="max-width:880px;margin:0 auto 1.2rem">
+      The same recording is explained by many friction / restitution values, and the posterior narrows them using the observed motion.
+    </p>
+    <h3 class="title is-5">Real clips (GAUGE)</h3>
+    <div class="vgrid cols-2 stack-mobile">
+      <figure class="vtile pp-card is-real"><video class="lazy pp-media" data-src="./static/videos/gauge_slope_slider_person_blur.mp4" poster="./static/posters/gauge_slope_slider_person_blur.jpg" muted loop playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Slope slider: real video (left) and fitted simulation (right), 0.5× speed. A person in the background is blurred.</figcaption></figure>
+      <figure class="vtile pp-card is-real"><video class="lazy pp-media" data-src="./static/videos/gauge_bouncing_ball_nominal.mp4" poster="./static/posters/gauge_bouncing_ball_nominal.jpg" muted loop playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Bouncing ball: real video (left) and fitted simulation (right), 0.5× speed.</figcaption></figure>
+    </div>
+    <p class="small muted" style="margin-top:.4rem">Both clips show time extrapolation: the fitted world predicts how the observed motion continues.</p>
+    <h3 class="title is-5" style="margin-top:1.4rem">More captures</h3>
+    <p class="small muted" style="margin:-.4rem 0 .8rem">Each capture changes one hidden property while keeping the appearance the same, so a camera alone cannot tell the cases apart.</p>
+    <div class="columns is-multiline">
+      <div class="column is-3-desktop is-6-tablet"><div class="ph-card"><div class="ph-media">Coming soon</div><h4>Three bouncing balls</h4><p class="small">Three similar balls dropped from the same height, separated by restitution.</p><span class="ph-pill">Coming soon</span></div></div>
+      <div class="column is-3-desktop is-6-tablet"><div class="ph-card"><div class="ph-media">Coming soon</div><h4>Hidden center of mass</h4><p class="small">Identical-looking boxes with different internal weights, pushed at the same point; they turn differently.</p><span class="ph-pill">Coming soon</span></div></div>
+      <div class="column is-3-desktop is-6-tablet"><div class="ph-card"><div class="ph-media">Coming soon</div><h4>Hidden friction</h4><p class="small">Identical-looking boxes with different bottom surfaces, pushed the same way; they slide different distances.</p><span class="ph-pill">Coming soon</span></div></div>
+      <div class="column is-3-desktop is-6-tablet"><div class="ph-card"><div class="ph-media">Coming soon</div><h4>Mass and grasp</h4><p class="small">The dexterous hand grasps identical-looking objects with different ballast; heavy ones need a firmer grip.</p><span class="ph-pill">Coming soon</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== POSTERIOR EXPLORER ============================== -->
+<section class="section section-alt" id="explorer">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Posterior Explorer</h2>
+    <p class="has-text-centered lead" style="max-width:900px;margin:0 auto 1.2rem">
+      For this recording, the posterior puts its mass on these worlds, and its predicted success matches what happens; the prior does not.
+      Pick a world on the friction × finger-force grid, or draw eight worlds from the prior or the posterior.
+    </p>
+    <div class="ctrl-row">
+      <span><span class="ctrl-label">Task</span><span class="seg" id="px-task"></span></span>
+      <span><span class="ctrl-label">Action</span><span class="seg" id="px-action"></span></span>
+      <span id="px-flag"></span>
+    </div>
+    <div class="px">
+      <div class="px-panel">
+        <h5><span class="tag is-small tag-real">real</span> Recording</h5>
+        <video id="px-real" class="pp-media" muted playsinline preload="none"></video>
+        <p class="small muted" id="px-real-note" style="margin-top:.5rem"></p>
+      </div>
+      <div class="px-panel">
+        <h5><span class="tag is-small tag-sim">sim</span> Selected world</h5>
+        <video id="px-world" class="pp-media" muted playsinline preload="none"></video>
+        <div class="slider-row"><label for="px-mu">Friction μ</label><input type="range" id="px-mu" min="0" max="5" step="1" value="2"><output id="px-mu-out"></output></div>
+        <div class="slider-row"><label for="px-f">Finger force</label><input type="range" id="px-f" min="0" max="4" step="1" value="2"><output id="px-f-out"></output></div>
+        <dl class="px-readout">
+          <dt>Outcome</dt><dd id="px-outcome">—</dd>
+          <dt>Failure type</dt><dd id="px-failure">—</dd>
+          <dt>Lift height</dt><dd id="px-lift">—</dd>
+          <dt>Tilt</dt><dd id="px-tilt">—</dd>
+        </dl>
+      </div>
+      <div class="px-panel px-heat">
+        <h5>Outcome grid and probability mass</h5>
+        <div class="seg" id="px-mass"><button data-m="posterior" class="active">Posterior</button><button data-m="prior">Prior</button></div>
+        <select id="px-postsel" class="px-select" hidden aria-label="Which belief to show"></select>
+        <p class="small muted" id="px-postnote" style="margin:.35rem 0 0"></p>
+        <div class="px-pred" id="px-pred"></div>
+        <div class="heat" id="px-heat"></div>
+        <div class="heat-legend">
+          <span class="sw" style="background:var(--ok-soft)"></span>success
+          <span class="sw" style="background:var(--bad-soft);margin-left:8px"></span>failure
+          <span class="sw" style="background:rgba(36,41,47,.78);border-radius:50%;margin-left:8px"></span>probability mass (dot area).
+          Rows: friction μ; columns: finger-force scale. Cells outside the prior range carry zero prior and posterior mass. Click a cell to load that world.
+        </div>
+      </div>
+    </div>
+    <div class="px-panel" style="margin-top:14px">
+      <div class="ctrl-row" style="margin-bottom:0">
+        <button class="btn-plain" id="px-draw-prior">Sample 8 worlds from prior</button>
+        <button class="btn-plain" id="px-draw-post">Sample 8 worlds from posterior</button>
+        <span id="px-draw-summary" class="small"></span>
+      </div>
+      <div class="px-samples" id="px-samples"></div>
+    </div>
+    <div class="px-panel" style="margin-top:14px" id="px-tp-panel">
+      <h5>Third-person view of selected worlds <span class="tag is-small tag-sim">sim</span></h5>
+      <div class="ctrl-row" style="margin-bottom:.5rem"><span class="seg" id="px-tp-btns"></span><span class="small muted" id="px-tp-note"></span></div>
+      <video id="px-tp" class="lazy pp-media" muted loop playsinline preload="none" style="max-width:760px"></video>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== HUMANOID DEXTEROUS TRANSFER ============================== -->
+<section class="section" id="dex">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Humanoid dexterous transfer</h2>
+    <p class="has-text-centered lead" style="max-width:900px;margin:0 auto 1.2rem">
+      A K15 humanoid with a LinkerHand L20 transfers a circuit board onto an orange fixture. In the real recording the board slips out of the hand;
+      the simulation starts from a designed pose and completes the transfer.
+    </p>
+    <div class="vgrid cols-2 stack-mobile" data-sync-group="dex">
+      <figure class="vtile pp-card is-real tri">
+        <div class="tri-big"><video class="pp-media" data-src="./static/videos/dex_real_body.mp4" poster="./static/posters/dex_real_body.jpg" muted playsinline preload="none"></video><span class="pip-lbl">third person (EXO2)</span></div>
+        <div class="tri-row">
+          <div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_head.mp4" poster="./static/posters/dex_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+          <div class="tri-small"><div class="tri-soon">wrist · Coming soon</div></div>
+        </div>
+        <figcaption><span class="tag is-small tag-real">real</span> Teleoperated take: the board slips out of the hand during the carry. Background logos and text and the vest logo are blurred.</figcaption>
+      </figure>
+      <figure class="vtile pp-card is-sim tri">
+        <div class="tri-big"><video class="pp-media" data-src="./static/videos/dex_show.mp4" poster="./static/posters/dex_show.jpg" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
+        <div class="tri-row">
+          <div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_head_studio.mp4" poster="./static/posters/dex_head_studio.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+          <div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_sim_wrist.mp4" poster="./static/posters/dex_sim_wrist.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div>
+        </div>
+        <figcaption><span class="tag is-small tag-sim">sim</span> Reconstructed world: lift, carry, place, release, retreat.</figcaption>
+      </figure>
+    </div>
+    <div class="stat-row" style="justify-content:center;margin-top:1rem"><div class="stat"><div class="num">101 / 113</div><div class="lbl">layouts pass <span class="tag is-small tag-sim">sim</span></div></div></div>
+
+    <h3 class="title is-5" style="margin-top:1.6rem">Query world 8 under a weak grip and a fast carry <span class="tag is-small tag-sim">sim</span></h3>
+    <div class="columns is-vcentered">
+      <div class="column is-7">
+        <figure class="vtile pp-card is-sim"><video class="lazy pp-media" data-src="./static/videos/dex_fail_show.mp4" poster="./static/posters/dex_fail_show.jpg" muted loop playsinline preload="none"></video><figcaption>One of the eight posterior draws for query world 8, running the weak-grip, fast-carry action.</figcaption></figure>
+      </div>
+      <div class="column is-5 side-note">
+        <p>In query world 8 this action fails. All eight posterior draws fail as well (0 / 8), while 29 of 32 prior draws pass, so the posterior flags the risk before execution.</p>
+      </div>
+    </div>
+
+    <h3 class="title is-5" style="margin-top:1.2rem">Generated layouts <span class="tag is-small tag-sim">sim</span></h3>
+    <figure class="vtile pp-card"><img class="pp-media" src="./static/images/dex_layouts_head.jpg" alt="Four generated transfer layouts, head camera" loading="lazy"><figcaption>Four generated layouts, head camera.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============================== HUMANOID APPLE GRASP ============================== -->
+<section class="section section-alt" id="apple">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Humanoid apple grasp</h2>
+    <p class="has-text-centered lead" style="max-width:900px;margin:0 auto 1.2rem">
+      The same robot picks up an apple. In the real recording the hand grasps and lifts the apple, then opens in the air and the apple drops;
+      the place step in simulation is a designed target.
+    </p>
+    <div class="vgrid cols-2 stack-mobile" data-sync-group="apple">
+      <figure class="vtile pp-card is-real tri">
+        <div class="tri-big"><video class="pp-media" data-src="./static/videos/apple_real_head.mp4" poster="./static/posters/apple_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+        <div class="tri-row">
+          <div class="tri-small"><div class="tri-soon">no third-person camera in this recording</div></div>
+          <div class="tri-small"><div class="tri-soon">wrist · Coming soon</div></div>
+        </div>
+        <figcaption><span class="tag is-small tag-real">real</span> Grasp and lift, then the hand opens in the air and the apple drops.</figcaption>
+      </figure>
+      <figure class="vtile pp-card is-sim tri">
+        <div class="tri-big"><video class="pp-media" data-src="./static/videos/apple_show.mp4" poster="./static/posters/apple_show.jpg" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
+        <div class="tri-row">
+          <div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/apple_head_studio.mp4" poster="./static/posters/apple_head_studio.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+          <div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/apple_sim_wrist.mp4" poster="./static/posters/apple_sim_wrist.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div>
+        </div>
+        <figcaption><span class="tag is-small tag-sim">sim</span> Default world: grasp, lift, place on the board.</figcaption>
+      </figure>
+    </div>
+    <div class="stat-row" style="justify-content:center;margin-top:1rem"><div class="stat"><div class="num">36 / 80</div><div class="lbl">layouts pass <span class="tag is-small tag-sim">sim</span></div></div></div>
+
+    <h3 class="title is-5" style="margin:1.6rem 0 .6rem">A posterior draw in which the apple is not lifted <span class="tag is-small tag-sim">sim</span></h3>
+    <div class="vgrid cols-2 stack-mobile" data-sync-group="applefail" style="max-width:980px">
+      <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/videos/apple_sim_default_head.mp4" poster="./static/posters/apple_sim_default_head.jpg" muted playsinline preload="none"></video><figcaption>Default world: the apple is lifted and placed.</figcaption></figure>
+      <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/videos/apple_post_fail_head.mp4" poster="./static/posters/apple_post_fail_head.jpg" muted playsinline preload="none"></video><figcaption>Posterior draw: the grasp does not lift the apple.</figcaption></figure>
+    </div>
+    <figure class="vtile pp-card is-sim" style="margin-top:1rem"><img class="pp-media" src="./static/images/apple_layouts_head.jpg" alt="Four generated apple layouts, head camera" loading="lazy"><figcaption>Generated layouts, head camera <span class="tag is-small tag-sim">sim</span>.</figcaption></figure>
+  </div>
+</section>
+
+<!-- ============================== SIM-TO-REAL ============================== -->
+<section class="section" id="s2r">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">From simulation back to the real robot</h2>
+    <p class="has-text-centered lead" style="max-width:880px;margin:0 auto 1.4rem">
+      Posterior worlds are used to train or check a policy before it runs on the real robot; the question is whether a belief over worlds transfers better than a single reconstructed world.
+    </p>
+    <div class="s2r-grid">
+      <div class="pp-card s2r-card">
+        <div class="s2r-head"><span class="s2r-num">1</span><h4>Policy transfer</h4></div>
+        <p class="small">Train one policy on posterior worlds and one on a single reconstructed world, then measure real success on the same task.</p>
+        <div class="s2r-panel">
+          <div class="s2r-row"><span>Trained on posterior worlds</span><span class="s2r-val">—</span></div>
+          <div class="s2r-row"><span>Trained on a single world</span><span class="s2r-val">—</span></div>
+          <div class="s2r-cap">real success rate, same task</div>
+        </div>
+        <span class="s2r-pill">Coming soon</span>
+      </div>
+      <div class="pp-card s2r-card">
+        <div class="s2r-head"><span class="s2r-num">2</span><h4>Go / no-go before execution</h4></div>
+        <p class="small">Before each real attempt, the posterior predicts whether it will succeed. The prediction is compared with what actually happens.</p>
+        <div class="s2r-panel">
+          <table class="s2r-mat">
+            <thead><tr><th></th><th>Real: success</th><th>Real: failure</th></tr></thead>
+            <tbody>
+              <tr><th>Predicted go</th><td>—</td><td>—</td></tr>
+              <tr><th>Predicted no-go</th><td>—</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <span class="s2r-pill">Coming soon</span>
+      </div>
+      <div class="pp-card s2r-card">
+        <div class="s2r-head"><span class="s2r-num">3</span><h4>Paired real-vs-sim rollouts</h4></div>
+        <p class="small">The same action executed on the real robot and in posterior worlds, shown side by side.</p>
+        <div class="s2r-pair">
+          <div class="s2r-frame is-real"><span class="tag is-small tag-real">real</span><div class="s2r-icon">▶</div></div>
+          <div class="s2r-frame is-sim"><span class="tag is-small tag-sim">sim</span><div class="s2r-icon">▶</div></div>
+        </div>
+        <span class="s2r-pill">Coming soon</span>
+      </div>
+    </div>
+    <div class="pp-card s2r-matrix">
+      <div class="s2r-matrix-head"><h4>S2R matrix</h4><span class="s2r-pill">Coming soon</span></div>
+      <div class="table-wrap">
+      <table class="pp-table s2r-table">
+        <thead><tr><th>Task</th><th>Robot</th><th>What physics decides success</th><th>Real only</th><th>Real + one world</th><th>Real + posterior worlds</th><th>Posterior worlds only</th></tr></thead>
+        <tbody>
+          <tr class="group-row"><td colspan="7">Long-horizon precision assembly, by stage</td></tr>
+          <tr><td>Board grasp and seat</td><td>single arm</td><td>plate–finger friction, seat clearance</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>Base placement</td><td>single arm</td><td>mass, grip force</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>Board onto posts</td><td>single arm</td><td>sub-mm clearance</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>Screw pick and place</td><td>single arm</td><td>small-part grip, slip</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr class="group-row"><td colspan="7">Other tasks</td></tr>
+          <tr><td>Dexterous board transfer</td><td>humanoid</td><td>finger friction, grip force</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>Hidden-weight object to shelf</td><td>humanoid</td><td>mass, centre of mass</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>Cable routing or insertion</td><td>single arm</td><td>stiffness, friction</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>Drawer opening</td><td>single arm</td><td>slide friction, damping</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td><td class="dash">—</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div class="pp-card s2r-matrix">
+      <div class="s2r-matrix-head"><h4>Policies</h4><span class="s2r-pill">Coming soon</span></div>
+      <div class="pol-groups">
+        <div class="pol-group"><div class="pol-type">VLA</div><div class="pol-list"><span class="pol-chip">π0.5<em>Coming soon</em></span><span class="pol-chip">Xiaomi-Robotics-1<em>Coming soon</em></span></div></div>
+        <div class="pol-group"><div class="pol-type">WAM <span class="muted">(world–action model)</span></div><div class="pol-list"><span class="pol-chip">OpenWAM<em>Coming soon</em></span><span class="pol-chip">LongWAM<em>Coming soon</em></span><span class="pol-chip">ZeroWAM<em>Coming soon</em></span></div></div>
+        <div class="pol-group"><div class="pol-type">More policies</div><div class="pol-list"><span class="pol-chip">DM0.5<em>Coming soon</em></span><span class="pol-chip">G0.5<em>Coming soon</em></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== AGENT R2S ============================== -->
+<section class="section section-alt" id="agents">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Can a general coding agent do real-to-sim?</h2>
+    <p class="has-text-centered lead" style="max-width:900px;margin:0 auto 1.2rem">
+      Each agent received the same inputs for the long-horizon precision assembly task, worked in an isolated container without the PhysPosterior framework,
+      and was scored by the same independent scorer. Score = milestones completed, out of 5.
+    </p>
+    <div class="agent-grid" id="agent-grid"></div>
+    <p class="lead has-text-centered" style="margin-top:1.4rem;max-width:860px;margin-left:auto;margin-right:auto">
+      <b>Rebuilding one nominal scene is no longer enough. The hard part is knowing how far to trust it.</b>
+    </p>
+  </div>
+</section>
+
+<!-- ============================== R2S MODEL COMPARISON ============================== -->
+<section class="section" id="r2s-compare">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Comparison with real-to-sim models</h2>
+    <p class="lead">Object-level 3D generators and system-level real-to-sim pipelines, evaluated on the same tasks.</p>
+    <div class="table-wrap">
+      <table class="pp-table">
+        <thead><tr><th>Method</th><th>Geometry</th><th>Executable</th><th>Full task</th><th>Physics prediction</th></tr></thead>
+        <tbody>
+          <tr class="group-row"><td colspan="5">Object 3D</td></tr>
+          <tr><td>SAM 3D Objects</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+          <tr><td>TRELLIS.2</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+          <tr><td>Hunyuan3D 2.1</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+          <tr class="group-row"><td colspan="5">System level</td></tr>
+          <tr><td>SimFoundry</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+          <tr><td>Agentic Real2Sim</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+          <tr class="group-row"><td colspan="5">Ours</td></tr>
+          <tr><td><b>PhysPosterior</b></td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PPBENCH ============================== -->
+<section class="section section-alt" id="ppbench">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">PPBench</h2>
+    <p class="lead">PPBench scores whether a belief predicts what happens under an action it has not seen. Every prediction is frozen before the outcome is revealed.</p>
+    <div class="protocol">
+      <span class="step">1 · Evidence</span><span class="arrow">→</span>
+      <span class="step">2 · Freeze posterior</span><span class="arrow">→</span>
+      <span class="step">3 · Reveal new action</span><span class="arrow">→</span>
+      <span class="step">4 · Run</span><span class="arrow">→</span>
+      <span class="step">5 · Seal outcome</span><span class="arrow">→</span>
+      <span class="step">6 · Score</span>
+    </div>
+    <div class="table-wrap">
+      <table class="pp-table">
+        <thead><tr><th>Task group</th><th>Count</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td>Analytic tasks</td><td>6</td><td><span class="status sim">simulation</span></td></tr>
+          <tr><td>Contact inference</td><td>1</td><td><span class="status sim">simulation</span></td></tr>
+          <tr><td>GAUGE real clips (time extrapolation)</td><td>2</td><td><span class="status real">real</span></td></tr>
+          <tr><td>Long-horizon precision assembly</td><td>1</td><td><span class="status sim">simulation</span></td></tr>
+          <tr><td>Dexterous hand</td><td>1</td><td><span class="status sim">simulation</span></td></tr>
+          <tr><td>Real-robot sealed tasks</td><td>—</td><td><span class="status prog">Coming soon</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="title is-5" style="margin-top:1.8rem">Results on the analytic tasks <span class="tag is-small tag-sim">sim</span></h3>
+    <p>Error when predicting the outcome of a new action, in mm (lower is better). Point+t fits a single world; Joint NSF keeps the joint posterior.</p>
+    <div class="table-wrap">
+      <table class="pp-table">
+        <thead>
+          <tr><th rowspan="2">Task</th><th colspan="2">Standard</th><th colspan="2">Weak</th></tr>
+          <tr><th>Point+t</th><th>Joint NSF</th><th>Point+t</th><th>Joint NSF</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Force slide</td><td>.409</td><td class="best">.316</td><td>.517</td><td class="best">.466</td></tr>
+          <tr><td>Bounce</td><td>15.510</td><td class="best">6.588</td><td>12.109</td><td class="best">8.347</td></tr>
+          <tr><td>Incline</td><td>17.166</td><td class="best">1.874</td><td>43.417</td><td class="best">35.563</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="content" style="margin-top:.8rem">
+      <p>Across the six settings, keeping the joint posterior lowers the error by 10–89%. For weak-grip, fast-carry actions, the accuracy of predicting whether the action will succeed rises from 78% to 91%.</p>
+    </div>
+
+    <h3 class="title is-5" style="margin-top:1.8rem">PPBench scorecard</h3>
+    <div class="table-wrap" id="ppb-scorecard">
+      <table class="pp-table">
+        <thead><tr><th>Method</th><th>Reconstruction</th><th>New-action prediction</th><th>Paired utility</th></tr></thead>
+        <tbody>
+          <tr><td>PhysPosterior</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+          <tr><td>Baselines</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== BIBTEX ============================== -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre class="bibtex"><code id="pp-bibtex">Enable JavaScript to show the BibTeX entry.</code></pre>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content has-text-centered small">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            It is adapted from the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> project page template, with the layout following
+            <a href="https://simpler-env.github.io/">SIMPLER</a>. We thank the Nerfies authors for sharing the template.
+          </p>
+          <p>Code: CC BY-NC 4.0.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="./static/data/timeline.js"></script>
+<script src="./static/data/grid_placeholder.js"></script>
+<script src="./static/data/agents.js"></script>
+<script src="./static/js/sync.js"></script>
+<script src="./static/js/index.js"></script>
+<script src="./static/js/explorer.js"></script>
+<script src="./static/js/timeline.js"></script>
+<script type="module">
+  // Physics playground: mounted automatically when the section approaches the viewport (interface: static/playground/README_playground.md)
+  const slot = document.getElementById('pp-playground-slot');
+  if (slot && location.protocol !== 'file:') {
+    new IntersectionObserver(async (entries, obs) => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      const { mountPlayground } = await import('./static/playground/playground.js');
+      mountPlayground(slot);
+    }, { rootMargin: '600px' }).observe(slot);
+  }
+</script>
+</body>
+</html>

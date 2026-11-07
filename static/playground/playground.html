@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PhysPosterior · Physics playground</title>
+  <link rel="stylesheet" href="playground.css">
+  <style>
+    body { margin: 0; background: #fff; }
+    .page { max-width: 1240px; margin: 0 auto; padding: 1.6rem 1.25rem 2.5rem; }
+    .page h1 { font-family: 'Google Sans', 'Noto Sans', -apple-system, 'Segoe UI', sans-serif; font-size: 1.8rem; font-weight: 600; margin: 0 0 .25rem; color: #1f2328; }
+    .page .lede { color: #5b636e; margin: 0 0 1rem; font-family: 'Noto Sans', -apple-system, 'Segoe UI', sans-serif; max-width: 900px; line-height: 1.55; }
+    .page footer { margin-top: 1.6rem; color: #5b636e; font-size: .82rem; font-family: 'Noto Sans', -apple-system, 'Segoe UI', sans-serif; line-height: 1.5; }
+    @media (max-width: 520px) { .page { padding: 1rem .8rem 2rem; } .page h1 { font-size: 1.45rem; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>Physics playground</h1>
+    <p class="lede">Pick a new action and every world is simulated again in your browser. Blue worlds are drawn from the posterior after one observed clip; orange worlds are drawn from the prior. The dashed line is the true world.</p>
+    <div id="pp-playground"></div>
+    <noscript><p>This demo needs JavaScript. A static picture: <img src="fallback_desktop.png" alt="Physics playground screenshot" style="width:100%;border-radius:14px"></p></noscript>
+    <footer>
+      Physics: MuJoCo 3.9.0, official WebAssembly build (@mujoco/mujoco), running locally in a Web Worker. Rendering: Three.js.
+      Each update re-simulates 33 worlds (16 posterior, 16 prior, 1 true) with geometric primitives only.
+      Bounce and friction-slide posteriors are joint NSF samples from our simulated benchmark; the hidden-center-of-mass posterior is illustrative.
+    </footer>
+  </main>
+  <script type="module" src="playground.js"></script>
+  <script>
+    // file:// pages cannot load ES modules or WebAssembly in most browsers: show the static picture instead.
+    setTimeout(function () {
+      var el = document.getElementById('pp-playground');
+      if (el && !el.querySelector('.ppg-tabs') && !el.querySelector('.ppg-fallback')) {
+        el.innerHTML = '<div class="ppg ppg-fallback"><img src="fallback_desktop.png" alt="Physics playground screenshot"><p>The live demo did not start' +
+          (location.protocol === 'file:' ? ' because the page was opened as a local file. Serve this folder over http (for example <code>python3 -m http.server</code>) and reload.' : '. The picture shows the interactive version.') + '</p></div>';
+      }
+    }, 4000);
+  </script>
+</body>
+</html>
