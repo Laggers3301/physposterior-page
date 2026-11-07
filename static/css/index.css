@@ -500,3 +500,10 @@ table.pp-table.s2r-table th, table.pp-table.s2r-table td { white-space: normal; 
 /* first screen: less padding so the AC-ONE teaser starts higher */
 section.hero:first-of-type > .hero-body { padding-top: 2.2rem; padding-bottom: .6rem; }
 .hero.teaser > .container > .hero-body { padding-top: .8rem; }
+
+/* round 9: three views per card — third person (or wrist) on top, wrist + head below at equal size */
+.tri .tri-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+.tri .tri-small video.pp-media, .tri .tri-small .tri-soon { aspect-ratio: 4 / 3; object-fit: cover; }
+.tri .tri-big video.pp-media { aspect-ratio: 16 / 9; object-fit: cover; }
+.teaser-tri .tri .tri-big video.pp-media { aspect-ratio: 16 / 10; }
+.tri .tri-soon { border-radius: 10px; }

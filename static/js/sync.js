@@ -24,7 +24,7 @@
   function Group(host, videos, opts) {
     opts = opts || {};
     this.host = host; this.v = videos; this.on = videos.map(function () { return true; });
-    this.rate = opts.rate || 1; this.want = opts.autoplay !== false; this.onTick = opts.onTick || null;
+    this.rate = opts.rate || 1; this.norm = !!opts.normalize; this.want = opts.autoplay !== false; this.onTick = opts.onTick || null;
     this.loaded = false; this.ready = false; this.frozen = false; this.inView = false; this.raf = 0; this.badgeTimer = 0;
     host.classList.add("sync-host");
     var badge = document.createElement("span"); badge.className = "sync-loader"; badge.setAttribute("aria-label", "loading");
@@ -74,7 +74,12 @@
     }
     return false;
   };
-  G._eligible = function (f) { // followers of a different length are not time-locked (they loop on their own)
+  G._scale = function (f) { // normalize: a follower of another length runs at the same fraction of its own clip
+    var a = this._master().duration, b = f.duration;
+    return (this.norm && isFinite(a) && isFinite(b) && a > 0) ? b / a : 1;
+  };
+  G._eligible = function (f) { // followers of a different length are not time-locked (they loop on their own) unless normalize
+    if (this.norm) return true;
     var a = this._master().duration, b = f.duration;
     return !(isFinite(a) && isFinite(b) && Math.abs(a - b) > 0.5);
   };
@@ -82,7 +87,7 @@
     this._act().forEach(function (v) { if (v.paused) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } });
   };
   G._pauseAll = function () { this.v.forEach(function (v) { if (!v.paused) v.pause(); }); };
-  G._applyRate = function () { var r = this.rate; this.v.forEach(function (v) { v.playbackRate = r; }); };
+  G._applyRate = function () { var self = this; this.v.forEach(function (v) { v.playbackRate = self.rate * self._scale(v); }); };
   G._short = function () {
     var r = this.rate;
     return this._act().some(function (v) {
@@ -129,10 +134,11 @@
         if (!self.want && !f.paused) f.pause();
         return;
       }
-      var d = f.currentTime - t, ad = Math.abs(d);
-      if (ad > BIG || (!self.want && ad > FRAME)) { try { f.currentTime = t; } catch (e) {} }
-      else if (ad > FRAME) f.playbackRate = self.rate * Math.max(0.85, Math.min(1.15, 1 - d * 2));
-      else if (f.playbackRate !== self.rate) f.playbackRate = self.rate;
+      var k = self._scale(f), tt = t * k, base = self.rate * k;
+      var d = f.currentTime - tt, ad = Math.abs(d);
+      if (ad > BIG || (!self.want && ad > FRAME)) { try { f.currentTime = tt; } catch (e) {} }
+      else if (ad > FRAME) f.playbackRate = base * Math.max(0.85, Math.min(1.15, 1 - d * 2));
+      else if (f.playbackRate !== base) f.playbackRate = base;
       if (self.want && f.paused) { var r = f.play(); if (r && r.catch) r.catch(function () {}); }
       if (!self.want && !f.paused) f.pause();
     });
@@ -146,7 +152,7 @@
   G.seek = function (t) {
     var self = this;
     this._act().forEach(function (v) {
-      var tt = self._eligible(v) ? t : (isFinite(v.duration) ? t % v.duration : t);
+      var tt = self._eligible(v) ? t * self._scale(v) : (isFinite(v.duration) ? t % v.duration : t);
       try { v.currentTime = Math.max(0, tt); } catch (e) {}
     });
     if (this.onTick) this.onTick(t);
@@ -193,6 +199,6 @@
   };
   document.querySelectorAll("[data-sync-group]").forEach(function (host) {
     var vids = Array.prototype.slice.call(host.querySelectorAll("video"));
-    if (vids.length) window.PPSync.create(host, vids, {});
+    if (vids.length) window.PPSync.create(host, vids, { normalize: host.hasAttribute("data-sync-normalize") });
   });
 })();

@@ -272,7 +272,7 @@
       if (!isAsm) setTask(it.t);
     }
     items.forEach(function (it) { var b = document.createElement("button"); b.textContent = it.label; b.dataset.id = it.id; b.onclick = function () { show(it); }; dom.appendChild(b); });
-    show(asm ? items[0] : items[1]);
+    show(items[1] || items[0]);  // default: dexterous transfer; assembly stays a tab
   }
 
   function siteModel(byTask) {
