@@ -20,12 +20,12 @@ const NPOST = 16, TRUE_IDX = 32, SLOW_MS = 20000;
 // ------------------------------------------------------------------ scenes
 const SCENES = {
   grasp: {
-    tab: 'Grasp slip', kind: () => 'grasp', illustrative: true,
+    tab: 'Grasp slip', kind: () => 'grasp', weighted: true,
     intro: 'A two-finger gripper holds a thin board (like a circuit board) by its top edge, lifts it and carries it sideways. Unknown: finger–board friction and the board mass. Your action: grip force and how hard the arm accelerates.',
     success: { label: 'Board stays in the grip (slip under 6 mm)', ok: 'held', bad: 'slips', test: o => o.success },
   },
   apple: {
-    tab: 'Apple drop', kind: () => 'apple', illustrative: true,
+    tab: 'Apple drop', kind: () => 'apple', weighted: true,
     intro: 'Two kinds of apple look the same: a real one (heavy, barely bounces) and a foam prop (light, bouncy). The clip shows one drop from 5 cm. Your action: drop height and how fast you toss it toward the table edge.',
     success: { label: 'Apple stays on the table', ok: 'stays', bad: 'falls off', test: o => o.success },
   },
@@ -44,7 +44,7 @@ const SCENES = {
       : { label: 'Block stops in the 6–10 cm zone', ok: 'in zone', bad: 'misses', test: o => o.dist >= 0.06 && o.dist <= 0.10, zone: { key: 'dist', lo: 0.06, hi: 0.10 } },
   },
   com: {
-    tab: 'Hidden weight box', kind: () => 'com', illustrative: true,
+    tab: 'Hidden weight box', kind: () => 'com', weighted: true,
     intro: 'These parcels look the same, but the weight inside sits at different places. The clip is a push through the middle of the back face. Your action: which face you push and where.',
     success: { label: 'Parcel goes straight (turns less than 15°)', ok: 'straight', bad: 'turns', test: o => Math.abs(o.yaw) < 15, zone: { key: 'yaw', lo: -15, hi: 15 } },
   },
@@ -52,7 +52,7 @@ const SCENES = {
 const successOf = (state) => { const s = SCENES[state.scene].success; return typeof s === 'function' ? s(state) : s; };
 
 const METRICS = {
-  grasp: [{ key: 'slip', label: 'Board slip in the fingers', unit: 'mm', scale: 1000, cap: 30, capLabel: '≥30 (dropped)', get: o => o.slip, line: GRASP.slipOk }],
+  grasp: [{ key: 'slip', label: 'Board slip in the fingers', unit: 'mm', scale: 1000, cap: 30, capLabel: '≥30', get: o => o.slip, line: GRASP.slipOk }],
   apple: [
     { key: 'x', label: 'Where the apple ends up (table edge at 50 cm)', unit: 'cm', scale: 100, cap: 110, capLabel: 'far', get: o => o.x, line: TABLE_EDGE },
     { key: 'apex', label: 'First rebound height', unit: 'cm', scale: 100, get: o => o.apex },
@@ -668,7 +668,6 @@ export async function mountPlayground(root, opts = {}) {
     revealCom: false, dh: -0.25, angle: 23, force: 0.6, face: 'side', s: 0.0, grip: 0.8, accel: 15, appleH: 0.4, appleV: 0.8,
   };
 
-  const notice = h('div', { class: 'ppg-notice' }, h('strong', {}, 'Simulation only. '), 'Posterior samples come from our simulated benchmark tasks; real-object captures are planned.');
   const tabs = h('div', { class: 'ppg-tabs', role: 'tablist' });
   const intro = h('p', { class: 'ppg-intro' });
   const tags = h('div', { class: 'ppg-tags' });
@@ -686,10 +685,10 @@ export async function mountPlayground(root, opts = {}) {
   const outCard = h('div', { class: 'ppg-card' }, h('div', { class: 'ppg-card-title' }, 'Outcome under your action'), h('div', { class: 'ppg-card-sub' }), h('div', { class: 'ppg-charts' }));
   const selInfo = h('div', { class: 'ppg-sel' });
   right.append(legendRow(), succCard, outCard, clipCard, selInfo);
-  const viewWrap = h('div', { class: 'ppg-viewwrap' }, viewHost, h('div', { class: 'ppg-badge' }, 'MuJoCo · WebAssembly · live'), loading);
+  const viewWrap = h('div', { class: 'ppg-viewwrap' }, viewHost, h('div', { class: 'ppg-badge' }, 'Simulated in your browser (MuJoCo)'), loading);
   const left = h('div', { class: 'ppg-card ppg-left' }, viewWrap, viewBar, status);
   const grid = h('div', { class: 'ppg-grid2' }, left, right);
-  root.append(notice, tabs, h('div', { class: 'ppg-card ppg-head' }, intro, tags, sentence, controls), grid);
+  root.append(tabs, h('div', { class: 'ppg-card ppg-head' }, intro, tags, sentence, controls), grid);
   const tip = tooltip(root);
 
   let samples, com, apple, grasp;
@@ -762,7 +761,7 @@ export async function mountPlayground(root, opts = {}) {
     tabs.innerHTML = '';
     for (const [id, sc] of Object.entries(SCENES)) {
       const b = h('button', { type: 'button', role: 'tab', class: 'ppg-tab' + (state.scene === id ? ' is-on' : ''), 'aria-selected': state.scene === id },
-        sc.tab, sc.illustrative ? null : h('span', { class: 'ppg-tab-tag' }, 'benchmark'));
+        sc.tab, sc.weighted ? null : h('span', { class: 'ppg-tab-tag' }, 'trained model'));
       b.addEventListener('click', () => { state.scene = id; state.selected = 0; buildTabs(); rebuild(); });
       tabs.append(b);
     }
@@ -815,9 +814,9 @@ export async function mountPlayground(root, opts = {}) {
     const sc = SCENES[state.scene];
     intro.textContent = typeof sc.intro === 'function' ? sc.intro(state) : sc.intro;
     tags.innerHTML = '';
-    tags.append(sc.illustrative
-      ? h('span', { class: 'ppg-illus' }, 'Illustrative posterior, not from a trained model')
-      : h('span', { class: 'ppg-bench' }, 'Posterior samples from our simulated benchmark (joint NSF)'));
+    tags.append(sc.weighted
+      ? h('span', { class: 'ppg-illus' }, 'Posterior from weighting simulated worlds by the observed clip')
+      : h('span', { class: 'ppg-bench' }, 'Posterior samples from our trained model'));
     ws = worldSet(state, data);
     buildControls();
     view.build(ws.kind, ws.meta, state);
@@ -854,7 +853,7 @@ export async function mountPlayground(root, opts = {}) {
     if (k === 'apple' || k === 'grasp') {
       const W = ws.W, D = ws.D;
       const post = k === 'apple' ? W.posterior_clip_apex_m : W.posterior_clip_slip_m, prior = k === 'apple' ? D.prior_clip_apex_m : D.prior_clip_slip_m;
-      const metric = k === 'apple' ? { label: 'rebound of the 5 cm drop', unit: 'mm', scale: 1000 } : { label: 'slip in the lift test', unit: 'mm', scale: 1000, cap: 30, capLabel: '≥30 (dropped)' };
+      const metric = k === 'apple' ? { label: 'rebound of the 5 cm drop', unit: 'mm', scale: 1000 } : { label: 'slip in the lift test', unit: 'mm', scale: 1000, cap: 30, capLabel: '≥30' };
       const rows = { post: post.map((v, i) => ({ v, idx: i, tip: worldTip(i, `clip: ${fmt(v * 1000, 1)} mm`) })), prior: prior.map((v, i) => ({ v, idx: NPOST + i, tip: worldTip(NPOST + i, `clip: ${fmt(v * 1000, 1)} mm`) })) };
       sub.textContent = k === 'apple'
         ? 'Clip: the apple dropped from 5 cm. Cross: observed first rebound (with 2 mm noise). Dots: the same drop in each world.'
@@ -970,7 +969,7 @@ export function autoInit(selector = '#pp-playground, [data-pp-playground]') {
     el.dataset.ppgInit = '1';
     const start = () => mountPlayground(el, { scene: el.dataset.scene, debugHandle: el.dataset.debug !== undefined });
     if (!('IntersectionObserver' in window) || el.dataset.eager !== undefined) { start(); continue; }
-    if (!el.firstChild) el.append(h('div', { class: 'ppg-placeholder' }, 'The interactive physics playground starts when you scroll here.'));
+    if (!el.firstChild) el.append(h('div', { class: 'ppg-pending' }, 'The interactive physics playground starts when you scroll here.'));
     const io = new IntersectionObserver((entries) => { if (entries.some(e => e.isIntersecting)) { io.disconnect(); start(); } }, { rootMargin: '900px 0px' });
     io.observe(el);
   }

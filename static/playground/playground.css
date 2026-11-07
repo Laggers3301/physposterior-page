@@ -25,7 +25,7 @@
 .ppg-sentence { margin: 0 0 .7rem; color: var(--ppg-muted); font-style: italic; max-width: 980px; }
 .ppg-tags { margin: .1rem 0 .35rem; }
 .ppg-illus, .ppg-bench { display: inline-block; padding: .2rem .7rem; border-radius: 999px; font-size: .86rem; font-weight: 600; }
-.ppg-illus { background: #fdecea; color: #8f2a22; border: 1px solid #f1b8b2; }
+.ppg-illus { background: #eef2ee; color: #2f5740; border: 1px solid #cfdcd2; }
 .ppg-bench { background: #e7ecf7; color: #2b3a67; border: 1px solid #c9d4ee; }
 .ppg-head { margin-bottom: 14px; }
 .ppg-head .ppg-intro { margin-top: 0; }
@@ -88,7 +88,7 @@
 .ppg-succ-num b { color: var(--ppg-ink); font-size: 1.05rem; }
 .ppg-verdict { font-size: .9rem; font-weight: 600; padding: .1rem .6rem; border-radius: 999px; border: 1px solid var(--ppg-line); background: #fff; }
 .ppg-verdict.is-ok { color: #1f6b52; } .ppg-verdict.is-bad { color: #9b3a32; }
-.ppg-placeholder { min-height: 220px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: var(--ppg-soft);
+.ppg-pending { min-height: 220px; display: flex; align-items: center; justify-content: center; border-radius: 20px; background: var(--ppg-soft);
   color: var(--ppg-muted); font-size: .95rem; padding: 1rem; text-align: center; }
 .ppg-card-title { font-family: 'Google Sans', 'Noto Sans', sans-serif; font-weight: 600; font-size: 1rem; }
 .ppg-card-sub { font-size: .82rem; color: var(--ppg-muted); margin-bottom: .35rem; }

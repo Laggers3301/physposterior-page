@@ -17,13 +17,13 @@
 <body>
   <main class="page">
     <h1>Physics playground</h1>
-    <p class="lede">Pick a new action and every world is simulated again in your browser. Blue worlds are drawn from the posterior after one observed clip; orange worlds are drawn from the prior. The dashed line is the true world.</p>
+    <p class="lede">Pick a new action and every world is simulated again in your browser. Blue worlds are drawn from the posterior after one observed clip; orange worlds are drawn from the prior. The dashed line marks the true world.</p>
     <div id="pp-playground"></div>
     <noscript><p>This demo needs JavaScript. A static picture: <img src="fallback_desktop.png" alt="Physics playground screenshot" style="width:100%;border-radius:14px"></p></noscript>
     <footer>
-      Physics: MuJoCo 3.9.0, official WebAssembly build (@mujoco/mujoco), running locally in a Web Worker. Rendering: Three.js.
-      Each update re-simulates 33 worlds (16 posterior, 16 prior, 1 true) with geometric primitives only.
-      Bounce and friction-slide posteriors are joint NSF samples from our simulated benchmark; the hidden-center-of-mass posterior is illustrative.
+      Physics: MuJoCo 3.9.0, official WebAssembly build (@mujoco/mujoco), running in a Web Worker in your browser. Rendering: Three.js.
+      Each update re-simulates 33 worlds (16 posterior, 16 prior, 1 true) built from geometric primitives.
+      Bounce and Friction slide use posterior samples from our trained model; Grasp slip, Apple drop and Hidden weight box use a posterior from weighting simulated worlds by the observed clip.
     </footer>
   </main>
   <script type="module" src="playground.js"></script>

@@ -149,8 +149,9 @@
     </div>
     <div class="stat-row" style="justify-content:center;margin-top:1rem">
       <div class="stat"><div class="num">44 / 49</div><div class="lbl">layouts qualified <span class="tag is-small tag-sim">sim</span></div></div>
-      <div class="stat"><div class="num">0.007 mm</div><div class="lbl">board-on-post error <span class="tag is-small tag-sim">sim</span></div></div>
-      <div class="stat"><div class="num">≤ 0.028 mm</div><div class="lbl">screw lateral error <span class="tag is-small tag-sim">sim</span></div></div>
+      <div class="stat"><div class="num">0.007 / 0.0064 mm</div><div class="lbl">board-on-post error, teleop episode 0 / 1 <span class="tag is-small tag-sim">sim</span></div></div>
+      <div class="stat"><div class="num">≤ 0.028 / ≤ 0.024 mm</div><div class="lbl">screw lateral error, episode 0 / 1 <span class="tag is-small tag-sim">sim</span></div></div>
+      <div class="stat"><div class="num">2 / 2</div><div class="lbl">teleop episodes reproduced <span class="tag is-small tag-sim">sim</span></div></div>
     </div>
 
     <h3 class="title is-5" style="margin-top:2rem">The whole task, five cameras, one clock</h3>
@@ -158,6 +159,7 @@
       <div class="tl-grid" id="tl-grid"></div>
       <div class="tl-bar">
         <div class="tl-controls">
+          <span class="seg" id="tl-ep"></span>
           <button class="btn-plain" id="tl-play">Pause</button>
           <span class="seg" id="tl-rate"><button data-r="1">1×</button><button data-r="2">2×</button><button data-r="4" class="active">4×</button></span>
           <span class="time" id="tl-time">0.0 s</span>
@@ -169,7 +171,8 @@
         </div>
         <div class="tl-events" id="tl-events"></div>
       </div>
-      <p class="small muted" style="margin-top:.6rem">Real views are re-timed onto the simulation clock with an event-anchored frame map; every view shows frame k at k/30 s.</p>
+      <p class="small" id="tl-ep-stats" style="margin-top:.6rem"></p>
+      <p class="small muted" style="margin-top:.2rem">Real views are re-timed onto the simulation clock with an event-anchored frame map; every view shows frame k at k/30 s.</p>
     </div>
     <div class="only-mobile">
       <figure class="vtile pp-card is-real">
@@ -204,7 +207,7 @@
     <p class="has-text-centered lead" style="max-width:860px;margin:0 auto 1.2rem">
       Change the action and your browser re-simulates posterior worlds, prior worlds and the true world in MuJoCo, side by side.
     </p>
-    <div id="pp-playground-slot"><img src="./static/playground/fallback_desktop.png" alt="Physics playground" style="width:100%;border-radius:14px"></div>
+    <div id="pp-playground" data-scene="grasp"></div>
   </div>
 </section>
 
@@ -532,16 +535,46 @@
       <p>Across the six settings, keeping the joint posterior lowers the error by 10–89%. For weak-grip, fast-carry actions, the accuracy of predicting whether the action will succeed rises from 78% to 91%.</p>
     </div>
 
-    <h3 class="title is-5" style="margin-top:1.8rem">PPBench scorecard</h3>
-    <div class="table-wrap" id="ppb-scorecard">
-      <table class="pp-table">
-        <thead><tr><th>Method</th><th>Reconstruction</th><th>New-action prediction</th><th>Paired utility</th></tr></thead>
+    <h3 class="title is-5" style="margin-top:1.8rem">PPBench scorecard · long-horizon precision assembly</h3>
+
+    <h4 class="ppb-stage">Stage 1 · Reconstruction consistency</h4>
+    <div class="table-wrap pp-card ppb-card">
+      <table class="pp-table ppb-table">
+        <thead><tr><th>Method</th><th>Milestones</th><th>Isolated rerun</th><th>Welds / scripted poses</th><th>CAD penetration</th><th>Teleop deviation (DTW, rad)</th></tr></thead>
         <tbody>
-          <tr><td>PhysPosterior</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
-          <tr><td>Baselines</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
+          <tr class="ppb-pp"><td><b>PhysPosterior</b></td><td>5 / 5</td><td class="dash">—</td><td>none found</td><td>none (0.108 mm)</td><td>0.081</td></tr>
+          <tr><td>Claude Opus 5.5</td><td>5 / 5</td><td>reproduced</td><td>none</td><td>none (0.091 mm)</td><td>0.066</td></tr>
+          <tr><td>Kimi K3.1 Pro</td><td>0 / 5</td><td>reproduced</td><td>none</td><td>none</td><td>0.232</td></tr>
+          <tr><td>GLM-5.3</td><td>0 / 5</td><td>no output</td><td>none</td><td class="dash">—</td><td>0.013</td></tr>
+          <tr><td>DeepSeek V4.1 Flash</td><td>0 / 5</td><td>reproduced</td><td>none</td><td>base 2.5 mm into fixture</td><td>0.532</td></tr>
+          <tr><td>Doubao Seed 2.1 Pro</td><td>0 / 5</td><td>output not scorable</td><td>joint positions written during run</td><td class="dash">—</td><td class="dash">—</td></tr>
+          <tr><td>MiMo V2.6 Pro</td><td>0 / 5</td><td>reproduced</td><td>arm pose written every substep</td><td>none</td><td>0.000 (replay)</td></tr>
         </tbody>
       </table>
     </div>
+
+    <h4 class="ppb-stage">Stage 2 · Sealed hidden physics, 16 worlds</h4>
+    <p class="small muted" style="margin:-.2rem 0 .6rem">Each hidden world changes finger–board friction, board mass and finger–screw friction. Sub-task: pick the board, seat it in the fixture, release. Brier: lower is better.</p>
+    <div class="table-wrap pp-card ppb-card">
+      <table class="pp-table ppb-table">
+        <thead><tr><th>Method</th><th>Predicted success (mean)</th><th>Actual success</th><th>Brier [95% CI]</th></tr></thead>
+        <tbody>
+          <tr class="ppb-pp"><td><b>PP posterior</b></td><td>0.77</td><td>13 / 16</td><td><b>0.054</b> [0.008, 0.124]</td></tr>
+          <tr class="ppb-pp"><td>PP prior only</td><td>0.88</td><td>13 / 16</td><td>0.156 [0.016, 0.297]</td></tr>
+          <tr><td>Claude Opus 5.5</td><td>1</td><td>16 / 16</td><td>0.000</td></tr>
+          <tr><td>Kimi K3.1 Pro</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
+          <tr><td>GLM-5.3</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
+          <tr><td>DeepSeek V4.1 Flash</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
+          <tr><td>Doubao Seed 2.1 Pro</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
+          <tr><td>MiMo V2.6 Pro</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="small" style="margin-top:.5rem">Inference helps PP: with the same engine, the posterior lowers the Brier score from 0.156 (prior only) to 0.054.
+      Claude Opus 5.5: its world is insensitive to finger–board friction across the prior, so the hidden worlds do not separate outcomes.</p>
+
+    <h4 class="ppb-stage">Stage 3 · Real-task utility</h4>
+    <div class="pp-card ppb-card ppb-soon"><span class="s2r-pill">Coming soon</span></div>
   </div>
 </section>
 
@@ -578,17 +611,6 @@
 <script src="./static/js/index.js"></script>
 <script src="./static/js/explorer.js"></script>
 <script src="./static/js/timeline.js"></script>
-<script type="module">
-  // Physics playground: mounted automatically when the section approaches the viewport (interface: static/playground/README_playground.md)
-  const slot = document.getElementById('pp-playground-slot');
-  if (slot && location.protocol !== 'file:') {
-    new IntersectionObserver(async (entries, obs) => {
-      if (!entries[0].isIntersecting) return;
-      obs.disconnect();
-      const { mountPlayground } = await import('./static/playground/playground.js');
-      mountPlayground(slot);
-    }, { rootMargin: '600px' }).observe(slot);
-  }
-</script>
+<script type="module" src="./static/playground/playground.js"></script>
 </body>
 </html>
