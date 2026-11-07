@@ -377,3 +377,112 @@ table.s2r-mat td { background: #f1f3f6; border-radius: 10px; text-align: center;
 .ppb-soon { display: flex; justify-content: center; padding: 1.2rem; }
 .ppb-table th, .ppb-table td { white-space: normal; }
 table.pp-table.ppb-table th, table.pp-table.ppb-table td { white-space: normal; padding: .45rem .5rem; }
+
+/* ================= alignment system (round 7) =================
+   - cards in one row share the row height (grid stretch); captions fill the rest of the card
+   - media frames have a fixed ratio: 16:9 by default (object-fit: cover); .ar-43 = 4:3; .ar-native keeps the file's ratio
+   - one large view + two small ones: the two small ones split the large one's height
+   - one spacing scale: 14px between cards, 2.2rem above sub-headings */
+.section { padding: 3rem 1.5rem; }
+.section h3.title.is-5, .sub-h { margin: 2.2rem 0 .8rem !important; }
+.section h3.title.is-5:first-child { margin-top: 0 !important; }
+.sub-lead { margin: -.3rem 0 .9rem !important; }
+.vgrid { gap: 14px; align-items: stretch; }
+.vtile.pp-card { display: flex; flex-direction: column; height: 100%; }
+.vtile.pp-card > figcaption { flex: 1 0 auto; }
+.vtile > video.pp-media, .vtile > img.pp-media { aspect-ratio: 16 / 9; object-fit: cover; height: auto; }
+.vtile.ar-43 > video.pp-media, .vtile.ar-43 > img.pp-media { aspect-ratio: 4 / 3; }
+.vtile.ar-native > video.pp-media, .vtile.ar-native > img.pp-media { aspect-ratio: auto; object-fit: contain; }
+.columns.is-vcentered .column > .vtile { height: auto; }
+
+/* main demo: third person + two wrist views, the wrist views split the main height */
+.asm-stage { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 14px; align-items: stretch; }
+.asm-main { height: 100%; }
+.asm-main video { aspect-ratio: 16 / 9; }
+.asm-side { display: grid; grid-template-rows: 1fr 1fr; gap: 14px; min-height: 0; }
+.asm-side > figure { display: flex; flex-direction: column; min-height: 0; height: auto; }
+.asm-side > figure > video.pp-media { flex: 1 1 0; min-height: 0; height: 100%; aspect-ratio: auto; object-fit: cover; }
+@media (max-width: 768px) {
+  .asm-side { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
+  .asm-side > figure > video.pp-media { flex: none; aspect-ratio: 4 / 3; height: auto; }
+}
+
+/* three-view cards */
+.tri-big video, .tri-small video, .tri-soon { aspect-ratio: 16 / 9; object-fit: cover; }
+.vgrid > .tri { height: 100%; }
+
+/* timeline: 4:3 frames, info card stretches to the row */
+.tl-grid { gap: 10px; align-items: stretch; }
+.tl-grid video { aspect-ratio: 4 / 3; object-fit: cover; }
+
+/* explorer: three panels share the row height */
+.px { align-items: stretch; gap: 14px; }
+.px-panel { display: flex; flex-direction: column; }
+.px video.pp-media { aspect-ratio: 16 / 9; object-fit: cover; }
+.px-draw, .px-tp { margin-top: 14px; }
+.px-tp-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.seg.seg-col { display: flex; flex-direction: column; width: 100%; }
+.seg.seg-col button { border-right: 0; border-bottom: 1px solid #e1e4e8; text-align: left; }
+.seg.seg-col button:last-child { border-bottom: 0; }
+@media (max-width: 768px) { .px-tp-grid { grid-template-columns: 1fr; } }
+
+/* agent gallery */
+.agent-grid { gap: 14px; align-items: stretch; }
+.agent-card { display: flex; flex-direction: column; }
+.agent-card .media video, .agent-card .media img { aspect-ratio: 4 / 3; object-fit: cover; }
+.agent-card p { flex: 1 0 auto; }
+.agent-ctrl { display: flex; align-items: center; gap: 12px; margin: 0 0 12px; }
+.agent-ctrl input[type=range] { flex: 1; accent-color: #24292f; }
+
+/* assembly posterior explorer */
+.asmx-head { margin-bottom: 14px; padding: 12px 16px; font-size: .95rem; line-height: 1.55; }
+.asmx { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 14px; align-items: stretch; }
+.asmx-plot-card { display: flex; flex-direction: column; background: #fff; }
+.section-alt .asmx-plot-card { background: #fff; }
+.asmx-plot { width: 100%; flex: 1 1 auto; min-height: 300px; }
+.asmx-plot .grid { stroke: #e7eaee; stroke-width: 1; }
+.asmx-plot text { font-size: 11px; fill: #6b737d; font-family: inherit; }
+.asmx-plot text.lab { font-size: 12px; fill: #4b525b; }
+.asmx-plot .pt { stroke: #fff; stroke-width: 1.2; }
+.asmx-plot .pt.ok { fill: #1f8a70; } .asmx-plot .pt.bad { fill: #c2463d; }
+.asmx-plot .pt.prior { opacity: .55; }
+.asmx-plot .pt.truth { stroke: #24292f; stroke-width: 1; }
+.asmx-plot .pt.sel { stroke: #24292f; stroke-width: 2.4; }
+.asmx-plot .clip-ring { fill: none; stroke: #24292f; stroke-width: 1.6; stroke-dasharray: 3 2; pointer-events: none; }
+.asmx-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 6px 4px 0; color: #5b636e; align-items: center; }
+.asmx-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.asmx-legend .lg { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.asmx-legend .lg.ok { background: #1f8a70; } .asmx-legend .lg.bad { background: #c2463d; }
+.asmx-media { display: flex; flex-direction: column; gap: 10px; }
+.asmx-main, .asmx-small { position: relative; }
+.asmx-main video, .asmx-small video { aspect-ratio: 16 / 9; object-fit: cover; }
+.asmx-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
+.asmx-info { background: #fff; border-radius: 12px; padding: 10px 12px; line-height: 1.6; }
+@media (max-width: 900px) { .asmx { grid-template-columns: 1fr; } }
+.asm-side > figure > figcaption { flex: none; }
+.pol-groups.pol-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pol-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+a.pol-chip { color: inherit; text-decoration: none; transition: border-color .15s; }
+a.pol-chip:hover { border-color: #9aa3ad; }
+.pol-chip small { font-size: .74rem; color: #6b737d; }
+@media (max-width: 768px) { .pol-groups.pol-2 { grid-template-columns: 1fr; } }
+
+/* round 7b fixes */
+.asm-side > figure { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+.asm-side > figure > video.pp-media { width: 100%; height: 100%; min-height: 0; aspect-ratio: auto; object-fit: cover; }
+table.pp-table.s2r-table th, table.pp-table.s2r-table td { white-space: normal; }
+.px-rec-extra { margin-top: 10px; position: relative; }
+.px-rec-extra .tri-soon { aspect-ratio: 16 / 9; }
+@media (max-width: 768px) {
+  .asm-stage { grid-template-columns: 1fr; }
+  .asm-side { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
+  .asm-side > figure { display: flex; flex-direction: column; }
+  .asm-side > figure > video.pp-media { height: auto; aspect-ratio: 4 / 3; }
+}
+.asm-side > figure.vtile.pp-card { display: grid; grid-template-rows: minmax(0, 1fr) auto; height: 100%; }
+@media (max-width: 768px) { .asm-side > figure.vtile.pp-card { display: flex; height: auto; } }
+/* the wrist column takes the main view's height and never pushes the row taller */
+.asm-side { contain: size; grid-template-rows: minmax(0, 1fr) minmax(0, 1fr); }
+.asm-side > figure.vtile.pp-card { min-height: 0; overflow: hidden; }
+@media (max-width: 768px) { .asm-side { contain: none; grid-template-rows: none; } }
+@media (max-width: 900px) { .asmx-plot { min-height: 0; } }

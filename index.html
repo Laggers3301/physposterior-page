@@ -106,7 +106,7 @@
 <section class="section section-alt" id="method">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Method</h2>
-    <figure class="vtile pp-card">
+    <figure class="vtile pp-card ar-native">
       <img class="pp-media" src="./static/images/framework_f1.jpg" alt="PhysPosterior framework: limited evidence, joint belief, executable worlds, new action, what it enables" loading="lazy">
     </figure>
     <div class="content lead" style="margin-top:1rem">
@@ -154,6 +154,30 @@
       <div class="stat"><div class="num">2 / 2</div><div class="lbl">teleop episodes reproduced <span class="tag is-small tag-sim">sim</span></div></div>
     </div>
 
+    <h3 class="title is-5 sub-h">Change the physics, see what happens <span class="tag is-small tag-sim">sim</span></h3>
+    <p class="small muted sub-lead">The gripper picks up the circuit board and seats it in the fixture. Each point is one executed world: friction and board mass change, and a weak grip can let the board slip.</p>
+    <div class="seg" id="asmx-ds" style="margin-bottom:.7rem"></div>
+    <div class="asmx-head pp-card" id="asmx-head"></div>
+    <div class="asmx" id="asmx">
+      <div class="pp-card asmx-plot-card">
+        <svg id="asmx-plot" class="asmx-plot" role="img" aria-label="Executed worlds by friction and board mass"></svg>
+        <div class="asmx-legend small">
+          <span><svg width="14" height="14"><path d="M7 1 L8.6 5.2 L13 5.3 L9.6 8 L10.8 12.4 L7 9.8 L3.2 12.4 L4.4 8 L1 5.3 L5.4 5.2Z" fill="#7a828c"/></svg> true world</span>
+          <span><svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#7a828c"/></svg> posterior draw</span>
+          <span><svg width="12" height="12"><rect x="1" y="1" width="10" height="10" rx="2" fill="#7a828c"/></svg> prior draw</span>
+          <span><i class="lg ok"></i> success</span><span><i class="lg bad"></i> failure</span>
+          <span><svg width="16" height="16"><circle cx="8" cy="8" r="6.5" fill="none" stroke="#24292f" stroke-width="1.6" stroke-dasharray="3 2"/></svg> has a video (click)</span>
+        </div>
+      </div>
+      <div class="pp-card asmx-media" id="asmx-stage">
+        <div class="asmx-main"><video class="pp-media" id="asmx-show" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
+        <div class="asmx-row">
+          <div class="asmx-small"><video class="pp-media is-thumb" id="asmx-headcam" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
+          <div class="asmx-info small" id="asmx-info"></div>
+        </div>
+      </div>
+    </div>
+
     <h3 class="title is-5" style="margin-top:2rem">The whole task, five cameras, one clock</h3>
     <div class="only-desktop" id="tl">
       <div class="tl-grid" id="tl-grid"></div>
@@ -181,20 +205,12 @@
       </figure>
     </div>
 
-    <h3 class="title is-5" style="margin-top:2rem">Change the physics, see what happens</h3>
-    <p class="small muted" style="margin:-.4rem 0 .8rem">The same assembly motion executed in posterior worlds with different friction and mass; each run is marked with how far it gets.</p>
-    <div class="cs-grid">
-      <div class="pp-card cs-card"><div class="cs-frame"><span>Coming soon</span></div><div class="cs-meta"><b>Lower friction</b><span class="s2r-pill">Coming soon</span></div></div>
-      <div class="pp-card cs-card"><div class="cs-frame"><span>Coming soon</span></div><div class="cs-meta"><b>Heavier board</b><span class="s2r-pill">Coming soon</span></div></div>
-      <div class="pp-card cs-card"><div class="cs-frame"><span>Coming soon</span></div><div class="cs-meta"><b>Higher friction</b><span class="s2r-pill">Coming soon</span></div></div>
-    </div>
-
     <h3 class="title is-5" style="margin-top:2rem">Other layouts <span class="tag is-small tag-sim">sim</span></h3>
     <div class="vgrid cols-4">
-      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L000.mp4" poster="./static/posters/pcb_layout_L000.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L000 · parts near the demonstration</figcaption></figure>
-      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L002.mp4" poster="./static/posters/pcb_layout_L002.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L002 · parts and fixture moved</figcaption></figure>
-      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L004.mp4" poster="./static/posters/pcb_layout_L004.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L004 · wider part spread</figcaption></figure>
-      <figure class="vtile pp-card"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L009.mp4" poster="./static/posters/pcb_layout_L009.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L009 · parts near the demonstration</figcaption></figure>
+      <figure class="vtile pp-card ar-43"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L000.mp4" poster="./static/posters/pcb_layout_L000.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L000 · parts near the demonstration</figcaption></figure>
+      <figure class="vtile pp-card ar-43"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L002.mp4" poster="./static/posters/pcb_layout_L002.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L002 · parts and fixture moved</figcaption></figure>
+      <figure class="vtile pp-card ar-43"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L004.mp4" poster="./static/posters/pcb_layout_L004.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L004 · wider part spread</figcaption></figure>
+      <figure class="vtile pp-card ar-43"><video class="lazy pp-media" data-src="./static/videos/pcb_layout_L009.mp4" poster="./static/posters/pcb_layout_L009.jpg" muted loop playsinline preload="none"></video><figcaption>Layout L009 · parts near the demonstration</figcaption></figure>
     </div>
     <p class="small muted" style="margin-top:.4rem">Head camera, 4× speed. Each layout gets its own motion plan and simulation.</p>
   </div>
@@ -220,8 +236,8 @@
     </p>
     <h3 class="title is-5">Real clips (GAUGE)</h3>
     <div class="vgrid cols-2 stack-mobile">
-      <figure class="vtile pp-card is-real"><video class="lazy pp-media" data-src="./static/videos/gauge_slope_slider_person_blur.mp4" poster="./static/posters/gauge_slope_slider_person_blur.jpg" muted loop playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Slope slider: real video (left) and fitted simulation (right), 0.5× speed. A person in the background is blurred.</figcaption></figure>
-      <figure class="vtile pp-card is-real"><video class="lazy pp-media" data-src="./static/videos/gauge_bouncing_ball_nominal.mp4" poster="./static/posters/gauge_bouncing_ball_nominal.jpg" muted loop playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Bouncing ball: real video (left) and fitted simulation (right), 0.5× speed.</figcaption></figure>
+      <figure class="vtile pp-card is-real ar-native"><video class="lazy pp-media" data-src="./static/videos/gauge_slope_slider_person_blur.mp4" poster="./static/posters/gauge_slope_slider_person_blur.jpg" muted loop playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Slope slider: real video (left) and fitted simulation (right), 0.5× speed. A person in the background is blurred.</figcaption></figure>
+      <figure class="vtile pp-card is-real ar-native"><video class="lazy pp-media" data-src="./static/videos/gauge_bouncing_ball_nominal.mp4" poster="./static/posters/gauge_bouncing_ball_nominal.jpg" muted loop playsinline preload="none"></video><figcaption><span class="tag is-small tag-real">real</span> Bouncing ball: real video (left) and fitted simulation (right), 0.5× speed.</figcaption></figure>
     </div>
     <p class="small muted" style="margin-top:.4rem">Both clips show time extrapolation: the fitted world predicts how the observed motion continues.</p>
     <h3 class="title is-5" style="margin-top:1.4rem">More captures</h3>
@@ -252,6 +268,8 @@
       <div class="px-panel">
         <h5><span class="tag is-small tag-real">real</span> Recording</h5>
         <video id="px-real" class="pp-media" muted playsinline preload="none"></video>
+        <div class="px-rec-extra"><video id="px-real-body" class="pp-media" muted playsinline preload="none"></video><span class="pip-lbl">third person</span>
+          <div class="tri-soon" id="px-real-nobody" style="display:none">no third-person camera in this recording</div></div>
         <p class="small muted" id="px-real-note" style="margin-top:.5rem"></p>
       </div>
       <div class="px-panel">
@@ -281,7 +299,7 @@
         </div>
       </div>
     </div>
-    <div class="px-panel" style="margin-top:14px">
+    <div class="px-panel px-draw">
       <div class="ctrl-row" style="margin-bottom:0">
         <button class="btn-plain" id="px-draw-prior">Sample 8 worlds from prior</button>
         <button class="btn-plain" id="px-draw-post">Sample 8 worlds from posterior</button>
@@ -289,10 +307,15 @@
       </div>
       <div class="px-samples" id="px-samples"></div>
     </div>
-    <div class="px-panel" style="margin-top:14px" id="px-tp-panel">
-      <h5>Third-person view of selected worlds <span class="tag is-small tag-sim">sim</span></h5>
-      <div class="ctrl-row" style="margin-bottom:.5rem"><span class="seg" id="px-tp-btns"></span><span class="small muted" id="px-tp-note"></span></div>
-      <video id="px-tp" class="lazy pp-media" muted loop playsinline preload="none" style="max-width:760px"></video>
+    <div class="px-panel px-tp" id="px-tp-panel">
+      <div class="px-tp-grid">
+        <div><video id="px-tp" class="lazy pp-media" muted loop playsinline preload="none"></video></div>
+        <div class="px-tp-side">
+          <h5>Third-person view of selected worlds <span class="tag is-small tag-sim">sim</span></h5>
+          <div class="seg seg-col" id="px-tp-btns"></div>
+          <p class="small muted" id="px-tp-note" style="margin-top:.6rem"></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -336,7 +359,7 @@
     </div>
 
     <h3 class="title is-5" style="margin-top:1.2rem">Generated layouts <span class="tag is-small tag-sim">sim</span></h3>
-    <figure class="vtile pp-card"><img class="pp-media" src="./static/images/dex_layouts_head.jpg" alt="Four generated transfer layouts, head camera" loading="lazy"><figcaption>Four generated layouts, head camera.</figcaption></figure>
+    <figure class="vtile pp-card ar-native"><img class="pp-media" src="./static/images/dex_layouts_head.jpg" alt="Four generated transfer layouts, head camera" loading="lazy"><figcaption>Four generated layouts, head camera.</figcaption></figure>
   </div>
 </section>
 
@@ -369,11 +392,11 @@
     <div class="stat-row" style="justify-content:center;margin-top:1rem"><div class="stat"><div class="num">36 / 80</div><div class="lbl">layouts pass <span class="tag is-small tag-sim">sim</span></div></div></div>
 
     <h3 class="title is-5" style="margin:1.6rem 0 .6rem">A posterior draw in which the apple is not lifted <span class="tag is-small tag-sim">sim</span></h3>
-    <div class="vgrid cols-2 stack-mobile" data-sync-group="applefail" style="max-width:980px">
+    <div class="vgrid cols-2 stack-mobile" data-sync-group="applefail" style="max-width:980px;margin:0 auto">
       <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/videos/apple_sim_default_head.mp4" poster="./static/posters/apple_sim_default_head.jpg" muted playsinline preload="none"></video><figcaption>Default world: the apple is lifted and placed.</figcaption></figure>
       <figure class="vtile pp-card is-sim"><video class="pp-media" data-src="./static/videos/apple_post_fail_head.mp4" poster="./static/posters/apple_post_fail_head.jpg" muted playsinline preload="none"></video><figcaption>Posterior draw: the grasp does not lift the apple.</figcaption></figure>
     </div>
-    <figure class="vtile pp-card is-sim" style="margin-top:1rem"><img class="pp-media" src="./static/images/apple_layouts_head.jpg" alt="Four generated apple layouts, head camera" loading="lazy"><figcaption>Generated layouts, head camera <span class="tag is-small tag-sim">sim</span>.</figcaption></figure>
+    <figure class="vtile pp-card is-sim ar-native" style="margin-top:1rem"><img class="pp-media" src="./static/images/apple_layouts_head.jpg" alt="Four generated apple layouts, head camera" loading="lazy"><figcaption>Generated layouts, head camera <span class="tag is-small tag-sim">sim</span>.</figcaption></figure>
   </div>
 </section>
 
@@ -441,10 +464,9 @@
     </div>
     <div class="pp-card s2r-matrix">
       <div class="s2r-matrix-head"><h4>Policies</h4><span class="s2r-pill">Coming soon</span></div>
-      <div class="pol-groups">
-        <div class="pol-group"><div class="pol-type">VLA</div><div class="pol-list"><span class="pol-chip">π0.5<em>Coming soon</em></span><span class="pol-chip">Xiaomi-Robotics-1<em>Coming soon</em></span></div></div>
-        <div class="pol-group"><div class="pol-type">WAM <span class="muted">(world–action model)</span></div><div class="pol-list"><span class="pol-chip">OpenWAM<em>Coming soon</em></span><span class="pol-chip">LongWAM<em>Coming soon</em></span><span class="pol-chip">ZeroWAM<em>Coming soon</em></span></div></div>
-        <div class="pol-group"><div class="pol-type">More policies</div><div class="pol-list"><span class="pol-chip">DM0.5<em>Coming soon</em></span><span class="pol-chip">G0.5<em>Coming soon</em></span></div></div>
+      <div class="pol-groups pol-2">
+        <div class="pol-group"><div class="pol-type">VLA <span class="muted">(vision–language–action)</span></div><div class="pol-list"><a class="pol-chip" href="https://arxiv.org/abs/2504.16054" target="_blank" rel="noopener">π0.5<small>Physical Intelligence</small><em>Coming soon</em></a><a class="pol-chip" href="https://www.dexmal.com/blog/dm0.5/index_en.html" target="_blank" rel="noopener">DM0.5<small>Dexmal</small><em>Coming soon</em></a><a class="pol-chip" href="https://arxiv.org/abs/2607.15330" target="_blank" rel="noopener">Xiaomi-Robotics-1<small>Xiaomi</small><em>Coming soon</em></a><a class="pol-chip" href="https://arxiv.org/abs/2608.11739" target="_blank" rel="noopener">G0.5<small>Galaxea</small><em>Coming soon</em></a></div></div>
+        <div class="pol-group"><div class="pol-type">WAM <span class="muted">(world–action model)</span></div><div class="pol-list"><a class="pol-chip" href="https://arxiv.org/abs/2609.07398" target="_blank" rel="noopener">OpenWAM<small>OpenWAM-α</small><em>Coming soon</em></a><a class="pol-chip" href="https://arxiv.org/abs/2610.10528" target="_blank" rel="noopener">Long-WAM<small>NVIDIA et al.</small><em>Coming soon</em></a><a class="pol-chip" href="https://arxiv.org/abs/2608.26103" target="_blank" rel="noopener">Zero-WAM<small>Robbyant et al.</small><em>Coming soon</em></a><a class="pol-chip" href="https://arxiv.org/abs/2610.10270" target="_blank" rel="noopener">VPP2<small>Video Prediction Policy 2</small><em>Coming soon</em></a></div></div>
       </div>
     </div>
   </div>
@@ -607,10 +629,12 @@
 <script src="./static/data/timeline.js"></script>
 <script src="./static/data/grid_placeholder.js"></script>
 <script src="./static/data/agents.js"></script>
+<script src="./static/data/asm_posterior.js"></script>
 <script src="./static/js/sync.js"></script>
 <script src="./static/js/index.js"></script>
 <script src="./static/js/explorer.js"></script>
 <script src="./static/js/timeline.js"></script>
+<script src="./static/js/asmx.js"></script>
 <script type="module" src="./static/playground/playground.js"></script>
 </body>
 </html>

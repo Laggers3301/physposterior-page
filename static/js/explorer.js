@@ -68,7 +68,8 @@
   var $ = function (id) { return document.getElementById(id); };
   var vReal = $("px-real"), vWorld = $("px-world");
   // real recording + selected world share one clock (static/js/sync.js); clips of a different length loop on their own
-  var grp = window.PPSync.create(root.querySelector(".px"), [vReal, vWorld], {});
+  var vBody = $("px-real-body");
+  var grp = window.PPSync.create(root.querySelector(".px"), [vReal, vWorld, vBody], {});
   var isMobile = window.matchMedia("(max-width: 768px)").matches;
 
   function fmt(x, d) { return (x === null || x === undefined || x === "") ? "—" : (typeof x === "number" ? x.toFixed(d) : String(x).replace(/_/g, " ")); }
@@ -228,6 +229,10 @@
     seg($("px-task"), D.tasks, t.id, setTask);
     $("px-mu").max = t.nI - 1; $("px-f").max = t.nJ - 1;
     if (t.real.video) grp.setSource(0, t.real.video, t.real.poster);
+    var body = { pcb: ["./static/videos/dex_real_body.mp4", "./static/posters/dex_real_body.jpg"] }[t.id];
+    vBody.parentNode.querySelector(".pip-lbl").style.display = body ? "" : "none";
+    vBody.style.display = body ? "" : "none"; $("px-real-nobody").style.display = body ? "none" : "";
+    grp.setSource(2, body ? body[0] : t.real.video, body ? body[1] : t.real.poster);
     $("px-real-note").textContent = t.real.outcome;
     renderBeliefSel();
     // open on the action where the featured posterior and the prior disagree (PCB: weak grip + fast carry; apple: default)
