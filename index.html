@@ -65,7 +65,7 @@
       <div class="vgrid cols-3 stack-mobile teaser-tri" data-sync-group="teaser" data-sync-normalize>
       <figure class="vtile pp-card is-real tri">
         <div class="tri-big"><video class="pp-media" data-src="./static/videos/dex_real_body_raw.mp4" poster="./static/posters/dex_real_body_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
-        <div class="tri-row"><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_wrist_raw.mp4" poster="./static/posters/dex_real_wrist_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_head.mp4" poster="./static/posters/dex_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div></div>
+        <div class="tri-row"><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_wrist_raw_w.mp4" poster="./static/posters/dex_real_wrist_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_head.mp4" poster="./static/posters/dex_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div></div>
         <figcaption><span class="tag is-small tag-real">real</span> <b>The recording.</b> A humanoid hand lifts a circuit board; in this take the board slips out during the carry.</figcaption>
       </figure>
       <figure class="vtile pp-card is-sim tri">
@@ -310,7 +310,10 @@
       <div class="px-panel">
         <h5><span class="tag is-small tag-sim">sim</span> Selected world</h5>
         <div class="px-rec-extra" style="margin-top:0"><video id="px-world" class="pp-media" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div>
-        <div class="px-rec-extra"><video id="px-world-wrist" class="pp-media" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div>
+        <div class="px-row2">
+          <div class="px-rec-extra"><video id="px-world-wrist" class="pp-media" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div>
+          <div class="px-rec-extra"><video id="px-world-exo" class="pp-media" muted playsinline preload="none"></video><span class="pip-lbl">third person</span></div>
+        </div>
         <div class="slider-row"><label for="px-mu">Friction μ</label><input type="range" id="px-mu" min="0" max="5" step="1" value="2"><output id="px-mu-out"></output></div>
         <div class="slider-row"><label for="px-f">Finger force</label><input type="range" id="px-f" min="0" max="4" step="1" value="2"><output id="px-f-out"></output></div>
         <dl class="px-readout">
@@ -368,7 +371,7 @@
     <div class="vgrid cols-2 stack-mobile" data-sync-group="dex" data-sync-normalize>
       <figure class="vtile pp-card is-real tri">
         <div class="tri-big"><video class="pp-media" data-src="./static/videos/dex_real_body_raw.mp4" poster="./static/posters/dex_real_body_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">third person (EXO2)</span></div>
-        <div class="tri-row"><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_wrist_raw.mp4" poster="./static/posters/dex_real_wrist_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_head.mp4" poster="./static/posters/dex_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div></div>
+        <div class="tri-row"><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_wrist_raw_w.mp4" poster="./static/posters/dex_real_wrist_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/dex_real_head.mp4" poster="./static/posters/dex_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div></div>
         <figcaption><span class="tag is-small tag-real">real</span> Teleoperated take: the board slips out of the hand during the carry.</figcaption>
       </figure>
       <figure class="vtile pp-card is-sim tri">
@@ -410,7 +413,7 @@
     </p>
     <div class="vgrid cols-2 stack-mobile" data-sync-group="apple" data-sync-normalize>
       <figure class="vtile pp-card is-real tri">
-        <div class="tri-big"><video class="pp-media" data-src="./static/videos/apple_real_wrist_raw.mp4" poster="./static/posters/apple_real_wrist_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div>
+        <div class="tri-big"><video class="pp-media" data-src="./static/videos/apple_real_wrist_raw_w.mp4" poster="./static/posters/apple_real_wrist_raw.jpg" muted playsinline preload="none"></video><span class="pip-lbl">wrist</span></div>
         <div class="tri-row"><div class="tri-small"><video class="pp-media is-thumb" data-src="./static/videos/apple_real_head.mp4" poster="./static/posters/apple_real_head.jpg" muted playsinline preload="none"></video><span class="pip-lbl">head</span></div><div class="tri-small"><div class="tri-soon">no third-person camera in this recording</div><span class="pip-lbl">third person</span></div></div>
         <figcaption><span class="tag is-small tag-real">real</span> Grasp and lift, then the hand opens in the air and the apple drops.</figcaption>
       </figure>

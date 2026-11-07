@@ -1,15 +1,14 @@
-/* Agent R2S comparison. Milestones from r2s_agent_open_compare_20261107_r01/scoring/results/*.json
-   (delivered.milestones), extracted on compute server. Videos: runs/full/<id>/task/out/render.mp4, re-encoded on compute server;
-   MiMo uses scoring/rerun/mimo because its own render file was truncated. */
-/* replay: set to true and point video/poster to agent_replays/ once the common-renderer replays exist. */
+/* Agent R2S comparison. Milestones from r2s_agent_open_compare_20261107_r01/scoring/results/*.json (delivered.milestones).
+   Third-person videos: site_interactive_20261107/agent_replays/<id>_web.mp4 — each agent's saved states replayed with one
+   common renderer, one fixed third-person camera, 7164 frames on the teleoperation clock (same clock as the head views). */
 window.PP_AGENTS = [
-  { name: "Claude Opus 5.5", id: "claude", ms: [1, 1, 1, 1, 1],
+  { name: "Claude Opus 5.5", id: "claude", replay: true, video: "./static/videos/agent_claude_third_web.mp4", poster: "./static/posters/agent_claude_third_web.jpg", ms: [1, 1, 1, 1, 1],
     note: "Completed all five milestones. After lowering friction from 0.4 to 0.3 and rerunning, it placed only one screw." },
-  { name: "Kimi K3.1 Pro", id: "kimi", ms: [0, 0, 0, 0, 0], note: "No milestone completed." },
-  { name: "GLM-5.3", id: "glm", ms: [0, 0, 0, 0, 0], note: "No milestone completed." },
-  { name: "DeepSeek V4.1 Flash", id: "deepseek", ms: [0, 0, 0, 0, 0], note: "No milestone completed." },
-  { name: "Doubao Seed 2.1 Pro", id: "doubao", ms: [0, 0, 0, 0, 0], note: "No milestone completed. Its render shows almost none of the scene; scored by manual inspection." },
-  { name: "MiMo V2.6 Pro", id: "mimo", ms: [0, 0, 0, 0, 0], note: "No milestone completed. Video from the scorer's rerun of its code." }
+  { name: "Kimi K3.1 Pro", id: "kimi", replay: true, video: "./static/videos/agent_kimi_third_web.mp4", poster: "./static/posters/agent_kimi_third_web.jpg", ms: [0, 0, 0, 0, 0], note: "No milestone completed." },
+  { name: "GLM-5.3", id: "glm", replay: true, video: "./static/videos/agent_glm_v4_third_web.mp4", poster: "./static/posters/agent_glm_v4_third_web.jpg", ms: [0, 0, 0, 0, 0], note: "No milestone completed." },
+  { name: "DeepSeek V4.1 Flash", id: "deepseek", replay: true, video: "./static/videos/agent_deepseek_v2_third_web.mp4", poster: "./static/posters/agent_deepseek_v2_third_web.jpg", ms: [0, 0, 0, 0, 0], note: "No milestone completed. Its output ends at 128.3 s and the last state is held." },
+  { name: "Doubao Seed 2.1 Pro", id: "doubao", replay: true, video: "./static/videos/agent_doubao_third_web.mp4", poster: "./static/posters/agent_doubao_third_web.jpg", ms: [0, 0, 0, 0, 0], note: "No milestone completed. Its state time axis is invalid and a screw flies out of the scene, so the replay stops there (row 659) and holds." },
+  { name: "MiMo V2.6 Pro", id: "mimo", replay: true, video: "./static/videos/agent_mimo_third_web.mp4", poster: "./static/posters/agent_mimo_third_web.jpg", ms: [0, 0, 0, 0, 0], note: "No milestone completed." }
 ];
 
 /* Eight head-camera views on one teleoperation clock (7164 frames, 30 fps). Rendered on compute server by the render agent

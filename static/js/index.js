@@ -67,7 +67,7 @@
      Any video buffering pauses all six; play / pause / scrub act on the shared clock. */
   var ag = document.getElementById("agent-grid");
   if (ag && window.PP_AGENTS) {
-    var vids = [], P = 0, clock = 0, last = 0, want = true, ready = false, started = false, frozen = false;
+    var vids = [], P = 0, clock = 0, last = 0, want = true, ready = false, started = false, frozen = false, pendingFrac = null;
     var ctrl = document.createElement("div"); ctrl.className = "agent-ctrl";
     ctrl.innerHTML = '<button class="btn-plain" id="ag-play">Pause</button><input type="range" id="ag-scrub" min="0" max="1000" value="0" aria-label="agent videos"><span class="small muted" id="ag-t"></span>';
     ag.parentNode.insertBefore(ctrl, ag);
@@ -87,6 +87,7 @@
     function okBuf(v) { if (v.readyState >= 4) return true; var t = v.currentTime, b = v.buffered; for (var i = 0; i < b.length; i++) if (b.start(i) <= t + .05 && b.end(i) >= Math.min(t + 1, v.duration - .05)) return true; return false; }
     function toggle() { want = !want; playBtn.textContent = want ? "Pause" : "Play"; if (!want) vids.forEach(function (v) { v.pause(); }); }
     function seekNorm(f) { clock = f * P; vids.forEach(function (v) { if (isFinite(v.duration)) try { v.currentTime = f * v.duration; } catch (e) {} }); }
+    window.PPAgentGallery = { seekFrac: function (f) { if (P) seekNorm(f); else pendingFrac = f; }, frac: function () { return P ? clock / P : 0; } };
     playBtn.onclick = toggle;
     scrub.addEventListener("input", function () { dragging = true; seekNorm(scrub.value / 1000); });
     scrub.addEventListener("change", function () { dragging = false; });
@@ -98,6 +99,7 @@
           P = Math.max.apply(null, vids.map(function (v) { return v.duration; }));
           vids.forEach(function (v) { v.playbackRate = Math.max(0.0625, Math.min(16, v.duration / P)); });
           ready = vids.every(okBuf);
+          if (ready && pendingFrac !== null) { seekNorm(pendingFrac); pendingFrac = null; }
         }
         requestAnimationFrame(tick); return;
       }
@@ -181,6 +183,8 @@
     tabs.querySelectorAll("button").forEach(function (x) { x.classList.toggle("active", x === b); });
     var head = b.dataset.t === "head";
     document.getElementById("ag-head").style.display = head ? "" : "none"; document.getElementById("ag-third").style.display = head ? "none" : "";
-    if (!head) g.pause(); };
+    // the two tabs share the teleoperation clock: hand the current time over when switching
+    if (!head) { g.pause(); if (window.PPAgentGallery) window.PPAgentGallery.seekFrac(g.time() / dur); }
+    else { if (window.PPAgentGallery) g.seek(window.PPAgentGallery.frac() * dur); g.play(); } };
   window.PPAgentHeads = g;
 })();

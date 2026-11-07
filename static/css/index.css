@@ -517,3 +517,7 @@ section.hero:first-of-type > .hero-body { padding-top: 2.2rem; padding-bottom: .
 @media (max-width: 1023px) { .agh-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .agh-grid figcaption .tag { align-self: flex-start; margin-bottom: 2px; }
 .agh-grid figcaption { min-height: 6.4em; }
+
+.px-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.px-row2 .px-rec-extra { margin-top: 8px; }
+.px-row2 video.pp-media { aspect-ratio: 4 / 3; object-fit: cover; }
