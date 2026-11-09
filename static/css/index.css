@@ -508,8 +508,8 @@ section.hero:first-of-type > .hero-body { padding-top: 2.2rem; padding-bottom: .
 .teaser-tri .tri .tri-big video.pp-media { aspect-ratio: 16 / 10; }
 .tri .tri-soon { border-radius: 10px; }
 
-/* agent comparison: 8 head views */
-.agh-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+/* agent comparison: 9 head views */
+.agh-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
 .agh-grid video.pp-media { aspect-ratio: 4 / 3; object-fit: cover; }
 .agh-grid figcaption { display: flex; flex-direction: column; gap: 2px; font-size: .84rem; }
 .agh-score { color: #4b525b; font-variant-numeric: tabular-nums; }

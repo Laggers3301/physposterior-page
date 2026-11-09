@@ -1,0 +1,191 @@
+{
+ "id": "G_sam3d",
+ "states": "/work/states.npz",
+ "thresholds": {
+  "TOL": {
+   "seat": [
+    0.0015,
+    2.0
+   ],
+   "base": [
+    0.0015,
+    2.0
+   ],
+   "post": [
+    0.001,
+    2.0
+   ]
+  },
+  "hole_xy_m": 0.001,
+  "hole_normal_m": 0.02,
+  "screw_tilt_deg": 5.0,
+  "hold_s": 0.5,
+  "rest_range_m": 0.0005,
+  "moved_m": 0.02,
+  "retreat_rad": 0.1,
+  "repro_m": 0.001,
+  "pen_flag_m": 0.001
+ },
+ "schema_problems": [],
+ "delivered": {
+  "duration_s": 171.63,
+  "samples": 5150,
+  "fixture_motion_mm": 0.0,
+  "objects": {
+   "pcb": {
+    "moved_mm": 249.3,
+    "max_speed_m_s": 0.2,
+    "max_ang_speed_rad_s": 6.4,
+    "speed_flag": false
+   },
+   "white_base": {
+    "moved_mm": 6.3,
+    "max_speed_m_s": 0.2,
+    "max_ang_speed_rad_s": 1.5,
+    "speed_flag": false
+   },
+   "fixture": {
+    "moved_mm": 0.0,
+    "max_speed_m_s": 0.0,
+    "max_ang_speed_rad_s": 0.0,
+    "speed_flag": false
+   },
+   "screw0": {
+    "moved_mm": 61.1,
+    "max_speed_m_s": 0.96,
+    "max_ang_speed_rad_s": 27.5,
+    "speed_flag": false
+   },
+   "screw1": {
+    "moved_mm": 69.6,
+    "max_speed_m_s": 1.3,
+    "max_ang_speed_rad_s": 65.2,
+    "speed_flag": true
+   },
+   "screw2": {
+    "moved_mm": 65.3,
+    "max_speed_m_s": 1.51,
+    "max_ang_speed_rad_s": 88.1,
+    "speed_flag": true
+   },
+   "screw3": {
+    "moved_mm": 121.8,
+    "max_speed_m_s": 1.37,
+    "max_ang_speed_rad_s": 100.4,
+    "speed_flag": true
+   }
+  },
+  "closest": {
+   "seat_mm": 13.379,
+   "seat_deg": 32.12,
+   "base_mm": 377.408,
+   "base_deg": 35.94,
+   "post_mm": 121.82,
+   "post_deg": 6.76
+  },
+  "final": {
+   "seat_mm": 13.673,
+   "base_mm": 377.409,
+   "base_deg": 35.94,
+   "post_mm": 320.354,
+   "post_deg": 39.85
+  },
+  "symmetric_rotation_check_deg": {
+   "base": {
+    "id": 35.94,
+    "rx180": 178.9,
+    "ry180": 177.6,
+    "rz180": 144.17
+   },
+   "post": {
+    "id": 39.85,
+    "rx180": 154.47,
+    "ry180": 161.5,
+    "rz180": 156.49
+   }
+  },
+  "screws": [
+   {
+    "screw": 0,
+    "hole": 2,
+    "final_xy_mm": 26.179,
+    "final_normal_mm": 71.47,
+    "final_tilt_deg": 73.53,
+    "start_axis_vertical_deg": 1.2,
+    "t_placed": null,
+    "moved": true,
+    "placed": false
+   },
+   {
+    "screw": 1,
+    "hole": 1,
+    "final_xy_mm": 24.045,
+    "final_normal_mm": 87.8,
+    "final_tilt_deg": 72.08,
+    "start_axis_vertical_deg": 1.2,
+    "t_placed": null,
+    "moved": true,
+    "placed": false
+   },
+   {
+    "screw": 2,
+    "hole": 2,
+    "final_xy_mm": 31.383,
+    "final_normal_mm": 83.86,
+    "final_tilt_deg": 64.88,
+    "start_axis_vertical_deg": 1.2,
+    "t_placed": null,
+    "moved": true,
+    "placed": false
+   },
+   {
+    "screw": 3,
+    "hole": 1,
+    "final_xy_mm": 52.904,
+    "final_normal_mm": 84.1,
+    "final_tilt_deg": 72.54,
+    "start_axis_vertical_deg": 1.2,
+    "t_placed": null,
+    "moved": true,
+    "placed": false
+   }
+  ],
+  "rest_range_mm": {
+   "pcb": 0.0,
+   "white_base": 0.003,
+   "fixture": 0.0,
+   "screw0": 0.0,
+   "screw1": 0.0,
+   "screw2": 0.0,
+   "screw3": 0.0
+  },
+  "retreat_joint_rad": 1.428,
+  "milestones": {
+   "M1": false,
+   "M2": false,
+   "M3": false,
+   "M4": false,
+   "M5": false
+  },
+  "event_times_s": {
+   "M1": null,
+   "M2": null,
+   "M3": null
+  },
+  "screws_placed": 0,
+  "screw_order_times_increasing": true,
+  "gripper_range": [
+   -0.0,
+   0.0436
+  ]
+ },
+ "cad_penetration_final": {
+  "status": "skipped_or_timeout_120s"
+ },
+ "teleop_column": "observation.state.arm.left.joint_positions",
+ "teleop_joint_dtw": {
+  "rms_rad": 0.081,
+  "max_row_norm_rad": 0.6,
+  "duration_ratio": 0.719
+ }
+}

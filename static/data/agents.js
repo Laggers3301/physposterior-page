@@ -2,6 +2,7 @@
    Third-person videos: site_interactive_20261107/agent_replays/<id>_web.mp4 — each agent's saved states replayed with one
    common renderer, one fixed third-person camera, 7164 frames on the teleoperation clock (same clock as the head views). */
 window.PP_AGENTS = [
+  { name: "Astra (high)", id: "astra", replay: true, video: "./static/videos/agent_astra_third_web.mp4", poster: "./static/posters/agent_astra_third_web.jpg", ms: [1, 1, 1, 1, 1], note: "Four screws placed. Uses ideal simulated pose feedback and engineered physical parameters; hidden-physics prediction not evaluated." },
   { name: "Claude Opus 5.5", id: "claude", replay: true, video: "./static/videos/agent_claude_third_web.mp4", poster: "./static/posters/agent_claude_third_web.jpg", ms: [1, 1, 1, 1, 1],
     note: "Completed all five milestones. After lowering friction from 0.4 to 0.3 and rerunning, it placed only one screw." },
   { name: "Kimi K3.1 Pro", id: "kimi", replay: true, video: "./static/videos/agent_kimi_third_web.mp4", poster: "./static/posters/agent_kimi_third_web.jpg", ms: [0, 0, 0, 0, 0], note: "No milestone completed." },
@@ -11,11 +12,12 @@ window.PP_AGENTS = [
   { name: "MiMo V2.6 Pro", id: "mimo", replay: true, video: "./static/videos/agent_mimo_third_web.mp4", poster: "./static/posters/agent_mimo_third_web.jpg", ms: [0, 0, 0, 0, 0], note: "No milestone completed." }
 ];
 
-/* Eight head-camera views on one teleoperation clock (7164 frames, 30 fps). Rendered on compute server by the render agent
+/* Nine head-camera views on one teleoperation clock (7164 frames, 30 fps). Rendered on compute server by the render agent
    (site_interactive_20261107/agent_replays): agents replayed from their saved states with the PP scene's head camera. */
 window.PP_AGENT_HEADS = [
   { name: "Real teleoperation", kind: "real", src: "real_cam_high_teleop_clock_web", screws: "4 / 4" },
   { name: "PhysPosterior", kind: "sim", src: "pp_sim_head_teleop_clock_web", screws: "4 / 4", ms: "5 / 5" },
+  { name: "Astra (high)", kind: "sim", src: "agent_astra_head_web", screws: "4 / 4", ms: "5 / 5" },
   { name: "Claude Opus 5.5", kind: "sim", src: "agent_claude_head_web", screws: "4 / 4", ms: "5 / 5" },
   { name: "Kimi K3.1 Pro", kind: "sim", src: "agent_kimi_head_web", screws: "0 / 4", ms: "0 / 5" },
   { name: "GLM-5.3", kind: "sim", src: "agent_glm_v4_head_web", screws: "0 / 4", ms: "0 / 5", note: "fixture placed differently from PP" },

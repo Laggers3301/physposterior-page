@@ -8,7 +8,7 @@
   <!-- document.title is filled from the #pp-title heading by static/js/index.js -->
   <title>PhysPosterior</title>
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/index.css?v=20261109-r2">
   <link rel="stylesheet" href="./static/playground/playground.css">
 </head>
 <body>
@@ -522,22 +522,6 @@
       Each agent received the same inputs for the long-horizon precision assembly task, worked in an isolated container without the PhysPosterior framework,
       and was scored by the same independent scorer. Score = milestones completed, out of 5.
     </p>
-    <div class="pp-card content" id="astra-result" style="padding:1.2rem;margin-bottom:1.4rem">
-      <h3 class="title is-5">Astra (high) · 5 / 5 milestones · 4 / 4 screws</h3>
-      <p><code>gpt-6-astra</code>, high reasoning effort, using the same open-compare task card and <code>pp-agent-sandbox:20261107</code> image. The independent scorer records all five milestones and all four screws placed; its isolated rerun reproduces the saved trajectory with a maximum position difference of 0 mm.</p>
-      <div class="vgrid cols-2 stack-mobile">
-        <figure class="vtile is-sim">
-          <video controls playsinline preload="none" poster="./static/posters/astra_closeup.png" src="./static/videos/astra_overview.mp4" style="width:100%;aspect-ratio:4/3"></video>
-          <figcaption>Full 241 s simulation, original fixed overview camera; independent playback.</figcaption>
-        </figure>
-        <figure class="vtile is-sim">
-          <img src="./static/posters/astra_closeup.png" alt="Astra final assembly close-up with four placed screws" loading="lazy" style="width:100%">
-          <figcaption>Final assembly. Screws are placed, not fastened.</figcaption>
-        </figure>
-      </div>
-      <p class="small">This is a nominal execution result. The controller uses ideal simulated object-pose feedback and engineered physical parameters, including finger friction 1.0 and a 25 N finger-servo cap. Hidden-physics prediction has not been evaluated for Astra.</p>
-      <p class="small"><a href="./static/data/astra_score.json">Independent scoring record (JSON)</a> · MuJoCo 3.6.0 · no object welds or scripted object poses found in the reviewed rollout.</p>
-    </div>
     <div class="seg" id="ag-tabs" style="margin-bottom:.8rem"><button data-t="head" class="active">Head camera</button><button data-t="third">Third-person</button></div>
     <div id="ag-head">
       <div class="tl-controls" style="margin-bottom:.6rem">
@@ -547,11 +531,12 @@
       </div>
       <input type="range" id="agh-scrub" min="0" max="1000" value="0" aria-label="agent head videos" style="width:100%;accent-color:#24292f;margin-bottom:.8rem">
       <div class="agh-grid" id="agh-grid"></div>
-      <p class="small muted" style="margin-top:.6rem">All eight views use the same head camera as the real robot and the PhysPosterior reconstruction, on the teleoperation clock (238.8 s). Agent scenes are replayed from each agent's saved states with a common renderer; the camera is not moved to follow an agent's own robot base.</p>
+      <p class="small muted" style="margin-top:.6rem">All nine views use the same head camera as the real robot and the PhysPosterior reconstruction, on the teleoperation clock (238.8 s). Agent scenes are replayed from each agent's saved states with a common renderer; the camera is not moved to follow an agent's own robot base.</p>
     </div>
     <div id="ag-third" style="display:none">
     <div class="agent-grid" id="agent-grid"></div>
     </div>
+    <details class="small" style="margin-top:.8rem"><summary>Astra (high): scoring and replay details</summary><p><a href="./static/data/astra_score.json">Independent scoring record</a>: 5 / 5 milestones, 4 / 4 screws, isolated rerun reproduced. Same open-compare task and sandbox image. Both views use the common renderer and cameras; the 241 s source is shown on the existing 238.8 s clock. The original 28 mm robot-base offset is retained; the two saved finger positions are replayed separately, clipped to the public URDF limits for display. Nominal parameters and ideal simulated pose feedback; hidden-physics prediction has not been evaluated. Screws are placed, not fastened.</p></details>
     <p class="lead has-text-centered" style="margin-top:1.4rem;max-width:860px;margin-left:auto;margin-right:auto">
       <b>Rebuilding one nominal scene is no longer enough. The hard part is knowing how far to trust it.</b>
     </p>
@@ -562,23 +547,33 @@
 <section class="section" id="r2s-compare">
   <div class="container is-max-desktop">
     <h2 class="title is-3 has-text-centered">Comparison with real-to-sim models</h2>
-    <p class="lead">Object-level 3D generators and system-level real-to-sim pipelines, evaluated on the same tasks.</p>
-    <div class="table-wrap">
-      <table class="pp-table">
-        <thead><tr><th>Method</th><th>Geometry</th><th>Executable</th><th>Full task</th><th>Physics prediction</th></tr></thead>
-        <tbody>
-          <tr class="group-row"><td colspan="5">Object 3D</td></tr>
-          <tr><td>SAM 3D Objects</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
-          <tr><td>TRELLIS.2</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
-          <tr><td>Hunyuan3D 2.1</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
-          <tr class="group-row"><td colspan="5">System level</td></tr>
-          <tr><td>SimFoundry</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
-          <tr><td>Agentic Real2Sim</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
-          <tr class="group-row"><td colspan="5">Ours</td></tr>
-          <tr><td><b>PhysPosterior</b></td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td><td class="soon-cell">Coming soon</td></tr>
-        </tbody>
-      </table>
+    <p class="lead">Can single-image geometry support the same long-horizon assembly program?</p>
+    <p>Hunyuan3D 2.1 and SAM 3D Objects receive the same image and object masks. Their geometry is aligned using CAD scale and pose, then executed with the same recorded command program, Drake backend and nominal physical parameters. PhysPosterior uses CAD and teleoperation and is a reference with different inputs.</p>
+    <div class="table-wrap"><table class="pp-table">
+      <thead><tr><th>Method</th><th>Geometry / execution</th><th>Milestones</th><th>Screws placed</th></tr></thead>
+      <tbody>
+        <tr><td>Hunyuan3D 2.1</td><td>Generated; full rollout scored</td><td>0 / 5</td><td>0 / 4</td></tr>
+        <tr><td>SAM 3D Objects</td><td>Generated; full rollout scored</td><td>0 / 5</td><td>0 / 4</td></tr>
+        <tr><td>TRELLIS.2</td><td>Assets and collisions built; rollout interrupted</td><td>Not scored</td><td>Not scored</td></tr>
+        <tr><td>CAD positive control</td><td>Same collision compilation as generated assets</td><td>5 / 5</td><td>4 / 4</td></tr>
+        <tr><td><b>PhysPosterior (CAD reference)</b></td><td>Recorded scene reconstructed with CAD</td><td>5 / 5</td><td>4 / 4</td></tr>
+        <tr><td>SimFoundry / Agentic Real2Sim</td><td>Not evaluated in this comparison</td><td class="dash">—</td><td class="dash">—</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small">The CAD positive control passes all five milestones through the same geometry-compilation path. This isolates a geometry bottleneck under this fixed assembly program; it is not a matched-input ranking of PhysPosterior against single-image methods.</p>
+    <h3 class="title is-5" style="margin-top:1.4rem">Executed worlds · shared cameras and simulation clock</h3>
+    <div class="tl-controls" style="margin-bottom:.6rem"><button class="btn-plain" id="r2s-play">Play</button><span class="seg" id="r2s-rate"><button data-r="1" class="active">1×</button><button data-r="4">4×</button></span><span class="time small muted" id="r2s-time">0.0 s / 171.7 s</span></div>
+    <input type="range" id="r2s-scrub" min="0" max="1000" value="0" aria-label="R2S comparison timeline" style="width:100%;margin-bottom:.8rem">
+    <div class="vgrid cols-3 stack-mobile" id="r2s-media">
+      <figure class="vtile pp-card is-sim"><div><video class="pp-media" data-src="./static/videos/r2s_pp_exo.mp4" poster="./static/posters/r2s_pp_exo.jpg" muted playsinline preload="none"></video><span class="small muted">Third person</span></div><div><video class="pp-media" data-src="./static/videos/r2s_pp_head.mp4" poster="./static/posters/r2s_pp_head.jpg" muted playsinline preload="none"></video><span class="small muted">Head camera</span></div><figcaption><b>PhysPosterior · CAD reference</b> · 5 / 5<br>Uses CAD and teleoperation.</figcaption></figure>
+      <figure class="vtile pp-card is-sim"><div><video class="pp-media" data-src="./static/videos/r2s_hunyuan_exo.mp4" poster="./static/posters/r2s_hunyuan_exo.jpg" muted playsinline preload="none"></video><span class="small muted">Third person</span></div><div><video class="pp-media" data-src="./static/videos/r2s_hunyuan_head.mp4" poster="./static/posters/r2s_hunyuan_head.jpg" muted playsinline preload="none"></video><span class="small muted">Head camera</span></div><figcaption><b>Hunyuan3D 2.1</b> · 0 / 5<br>Generated PCB too narrow for the fixed grasp; assembly holes absent.</figcaption></figure>
+      <figure class="vtile pp-card is-sim"><div><video class="pp-media" data-src="./static/videos/r2s_sam3d_exo.mp4" poster="./static/posters/r2s_sam3d_exo.jpg" muted playsinline preload="none"></video><span class="small muted">Third person</span></div><div><video class="pp-media" data-src="./static/videos/r2s_sam3d_head.mp4" poster="./static/posters/r2s_sam3d_head.jpg" muted playsinline preload="none"></video><span class="small muted">Head camera</span></div><figcaption><b>SAM 3D Objects</b> · 0 / 5<br>PCB lifted and carried, but its 9.6 mm thickness prevents seating; assembly holes absent.</figcaption></figure>
     </div>
+    <p class="small muted">All six videos use the same head/external camera definitions and the 171.7 s execution clock. SAM 3D was rendered every fifth state and plays at 6 fps; the other videos are 30 fps. No temporal acceleration or interpolated motion is added. The agent comparison above is a separate open-agent protocol.</p>
+    <h3 class="title is-5" style="margin-top:1.4rem">Generated geometry · front, top and side</h3>
+    <figure class="vtile pp-card"><a href="./static/images/r2s_geometry_all4.png"><img class="pp-media" src="./static/images/r2s_geometry_all4.png" alt="CAD, Hunyuan3D, SAM 3D and TRELLIS.2: board, base and fixture in three views" loading="lazy"></a><figcaption>Left to right: CAD, Hunyuan3D 2.1, SAM 3D Objects, TRELLIS.2. Rows: PCB, base, fixture. Each column shows front/top/side views in the aligned CAD frame. Click for full resolution. TRELLIS.2 geometry is available; its full execution is unscored.</figcaption></figure>
+    <p class="small">SAM 3D provides camera-frame layout estimates, but neither completed single-image method supplies measured mass or friction. Their full rollouts are executable; the missing millimetre-scale features and shape errors limit this precision-assembly task. Each model/object uses one seed.</p>
+    <p class="small">Scoring records: <a href="./static/data/G_hunyuan21.json">Hunyuan3D</a> · <a href="./static/data/G_sam3d.json">SAM 3D</a> · <a href="./static/data/C1_cad_compiled.json">CAD positive control</a> · <a href="./static/data/C0_c09_assets.json">CAD reference replay</a>.</p>
   </div>
 </section>
 
@@ -637,7 +632,7 @@
         <tbody>
           <tr class="ppb-pp"><td><b>PhysPosterior</b></td><td>5 / 5</td><td class="dash">—</td><td>none found</td><td>none (0.108 mm)</td><td>0.081</td></tr>
           <tr><td>Claude Opus 5.5</td><td>5 / 5</td><td>reproduced</td><td>none</td><td>none (0.091 mm)</td><td>0.066</td></tr>
-          <tr><td><a href="#astra-result">Astra (high)</a></td><td>5 / 5</td><td>reproduced</td><td>none found</td><td>not flagged</td><td>0.360</td></tr>
+          <tr><td><a href="#agents">Astra (high)</a></td><td>5 / 5</td><td>reproduced</td><td>none found</td><td>not flagged</td><td>0.360</td></tr>
           <tr><td>Kimi K3.1 Pro</td><td>0 / 5</td><td>reproduced</td><td>none</td><td>none</td><td>0.232</td></tr>
           <tr><td>GLM-5.3</td><td>0 / 5</td><td>no output</td><td>none</td><td class="dash">—</td><td>0.013</td></tr>
           <tr><td>DeepSeek V4.1 Flash</td><td>0 / 5</td><td>reproduced</td><td>none</td><td>base 2.5 mm into fixture</td><td>0.532</td></tr>
@@ -702,10 +697,11 @@
 
 <script src="./static/data/timeline.js"></script>
 <script src="./static/data/grid_placeholder.js"></script>
-<script src="./static/data/agents.js"></script>
+<script src="./static/data/agents.js?v=20261109-r2"></script>
 <script src="./static/data/asm_posterior.js"></script>
 <script src="./static/js/sync.js"></script>
 <script src="./static/js/index.js"></script>
+<script src="./static/js/r2s-compare.js"></script>
 <script src="./static/js/explorer.js"></script>
 <script src="./static/js/timeline.js"></script>
 <script src="./static/js/asmx.js"></script>
