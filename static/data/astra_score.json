@@ -1,0 +1,416 @@
+{
+ "id": "astra",
+ "states": "/agent_out/states.npz",
+ "thresholds": {
+  "TOL": {
+   "seat": [
+    0.0015,
+    2.0
+   ],
+   "base": [
+    0.0015,
+    2.0
+   ],
+   "post": [
+    0.001,
+    2.0
+   ]
+  },
+  "hole_xy_m": 0.001,
+  "hole_normal_m": 0.02,
+  "screw_tilt_deg": 5.0,
+  "hold_s": 0.5,
+  "rest_range_m": 0.0005,
+  "moved_m": 0.02,
+  "retreat_rad": 0.1,
+  "repro_m": 0.001,
+  "pen_flag_m": 0.001
+ },
+ "schema_problems": [],
+ "audit": {
+  "files": 23,
+  "physics_step_calls": 2,
+  "counts": {
+   "weld": 0,
+   "connect": 0,
+   "mocap": 1,
+   "external_force": 1,
+   "state_write": 2,
+   "kinematic_set": 16
+  },
+  "hits": {
+   "weld": [],
+   "connect": [],
+   "mocap": [
+    "model_audit.json:4: \"mocap_bodies\": 0,"
+   ],
+   "external_force": [
+    "run.py:181: d.qfrc_applied[:6]=d.qfrc_bias[:6]"
+   ],
+   "state_write": [
+    "run.py:34: self.d.qpos[:6]=q;mujoco.mj_kinematics(self.m,self.d);mujoco.mj_comPos(self.m,self.d)",
+    "run.py:110: d.qpos[:6]=qcmd[0];d.qpos[6:8]=gcmd[0];mujoco.mj_forward(m,d)"
+   ],
+   "kinematic_set": [
+    "scene/model.xml:554: <geom name=\"base_link_visual\" type=\"mesh\" mesh=\"base_link\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".7 .72 .75 1\" density=\"0\" />",
+    "scene/model.xml:559: <geom name=\"link1_visual\" type=\"mesh\" mesh=\"link1\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".7 .72 .75 1\" density=\"0\" />",
+    "scene/model.xml:564: <geom name=\"link2_visual\" type=\"mesh\" mesh=\"link2\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".7 .72 .75 1\" density=\"0\" />",
+    "scene/model.xml:569: <geom name=\"link3_visual\" type=\"mesh\" mesh=\"link3\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".7 .72 .75 1\" density=\"0\" />",
+    "scene/model.xml:574: <geom name=\"link4_visual\" type=\"mesh\" mesh=\"link4\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".7 .72 .75 1\" density=\"0\" />",
+    "scene/model.xml:579: <geom name=\"link5_visual\" type=\"mesh\" mesh=\"link5\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".7 .72 .75 1\" density=\"0\" />",
+    "scene/model.xml:584: <geom name=\"link6_visual\" type=\"mesh\" mesh=\"link6\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".7 .72 .75 1\" density=\"0\" />",
+    "scene/model.xml:591: <geom name=\"gripper-1_visual\" type=\"mesh\" mesh=\"gripper-1\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".16 .18 .22 1\" density=\"0\" />",
+    "scene/model.xml:612: <geom name=\"gripper-2_visual\" type=\"mesh\" mesh=\"gripper-2\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".16 .18 .22 1\" density=\"0\" />",
+    "scene/model.xml:640: <geom name=\"fixture_visual\" type=\"mesh\" mesh=\"fixture\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\"1 .28 .035 1\" density=\"0\" />",
+    "scene/model.xml:917: <geom name=\"pcb_visual\" type=\"mesh\" mesh=\"pcb\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\"0.03 .42 .16 1\" density=\"0\" />",
+    "scene/model.xml:1059: <geom name=\"white_base_visual\" type=\"mesh\" mesh=\"white_base\" contype=\"0\" conaffinity=\"0\" group=\"2\" rgba=\".9 .91 .88 1\" density=\"0\" />",
+    "scene/model.xml:1282: <geom name=\"screw0_visual\" type=\"mesh\" mesh=\"screw\" contype=\"0\" conaffinity=\"0\" density=\"0\" group=\"2\" rgba=\".48 .5 .53 1\" />",
+    "scene/model.xml:1289: <geom name=\"screw1_visual\" type=\"mesh\" mesh=\"screw\" contype=\"0\" conaffinity=\"0\" density=\"0\" group=\"2\" rgba=\".48 .5 .53 1\" />",
+    "scene/model.xml:1296: <geom name=\"screw2_visual\" type=\"mesh\" mesh=\"screw\" contype=\"0\" conaffinity=\"0\" density=\"0\" group=\"2\" rgba=\".48 .5 .53 1\" />",
+    "scene/model.xml:1303: <geom name=\"screw3_visual\" type=\"mesh\" mesh=\"screw\" contype=\"0\" conaffinity=\"0\" density=\"0\" group=\"2\" rgba=\".48 .5 .53 1\" />"
+   ]
+  }
+ },
+ "delivered": {
+  "duration_s": 241.0,
+  "samples": 7231,
+  "fixture_motion_mm": 0.0,
+  "objects": {
+   "pcb": {
+    "moved_mm": 260.2,
+    "max_speed_m_s": 0.21,
+    "max_ang_speed_rad_s": 0.5,
+    "speed_flag": false
+   },
+   "white_base": {
+    "moved_mm": 316.1,
+    "max_speed_m_s": 0.28,
+    "max_ang_speed_rad_s": 3.4,
+    "speed_flag": false
+   },
+   "fixture": {
+    "moved_mm": 0.0,
+    "max_speed_m_s": 0.0,
+    "max_ang_speed_rad_s": 0.0,
+    "speed_flag": false
+   },
+   "screw0": {
+    "moved_mm": 183.1,
+    "max_speed_m_s": 0.08,
+    "max_ang_speed_rad_s": 0.0,
+    "speed_flag": false
+   },
+   "screw1": {
+    "moved_mm": 151.7,
+    "max_speed_m_s": 0.05,
+    "max_ang_speed_rad_s": 0.0,
+    "speed_flag": false
+   },
+   "screw2": {
+    "moved_mm": 114.4,
+    "max_speed_m_s": 0.07,
+    "max_ang_speed_rad_s": 0.0,
+    "speed_flag": false
+   },
+   "screw3": {
+    "moved_mm": 229.2,
+    "max_speed_m_s": 0.08,
+    "max_ang_speed_rad_s": 0.9,
+    "speed_flag": false
+   }
+  },
+  "closest": {
+   "seat_mm": 0.237,
+   "seat_deg": 0.01,
+   "base_mm": 0.286,
+   "base_deg": 0.15,
+   "post_mm": 0.107,
+   "post_deg": 0.01
+  },
+  "final": {
+   "seat_mm": 96.62,
+   "base_mm": 0.29,
+   "base_deg": 0.05,
+   "post_mm": 0.108,
+   "post_deg": 0.01
+  },
+  "symmetric_rotation_check_deg": {
+   "base": {
+    "id": 0.05,
+    "rx180": 179.99,
+    "ry180": 179.98,
+    "rz180": 179.96
+   },
+   "post": {
+    "id": 0.01,
+    "rx180": 180.0,
+    "ry180": 180.0,
+    "rz180": 179.99
+   }
+  },
+  "screws": [
+   {
+    "screw": 0,
+    "hole": 0,
+    "final_xy_mm": 0.027,
+    "final_normal_mm": -0.1,
+    "final_tilt_deg": 0.0,
+    "start_axis_vertical_deg": 0.0,
+    "t_placed": 103.03,
+    "moved": true,
+    "placed": true
+   },
+   {
+    "screw": 1,
+    "hole": 1,
+    "final_xy_mm": 0.027,
+    "final_normal_mm": -0.1,
+    "final_tilt_deg": 0.0,
+    "start_axis_vertical_deg": 0.0,
+    "t_placed": 135.03,
+    "moved": true,
+    "placed": true
+   },
+   {
+    "screw": 2,
+    "hole": 2,
+    "final_xy_mm": 0.019,
+    "final_normal_mm": -0.1,
+    "final_tilt_deg": 0.0,
+    "start_axis_vertical_deg": 0.0,
+    "t_placed": 173.37,
+    "moved": true,
+    "placed": true
+   },
+   {
+    "screw": 3,
+    "hole": 3,
+    "final_xy_mm": 0.034,
+    "final_normal_mm": -0.1,
+    "final_tilt_deg": 0.0,
+    "start_axis_vertical_deg": 0.0,
+    "t_placed": 202.03,
+    "moved": true,
+    "placed": true
+   }
+  ],
+  "rest_range_mm": {
+   "pcb": 0.0,
+   "white_base": 0.0,
+   "fixture": 0.0,
+   "screw0": 0.0,
+   "screw1": 0.0,
+   "screw2": 0.0,
+   "screw3": 0.0
+  },
+  "retreat_joint_rad": 0.26,
+  "milestones": {
+   "M1": true,
+   "M2": true,
+   "M3": true,
+   "M4": true,
+   "M5": true
+  },
+  "event_times_s": {
+   "M1": 19.27,
+   "M2": 54.9,
+   "M3": 73.33
+  },
+  "screws_placed": 4,
+  "screw_order_times_increasing": true,
+  "gripper_range": [
+   -0.0007,
+   0.086
+  ]
+ },
+ "cad_penetration_final": {
+  "pcb_in_white_base_mm": -0.1,
+  "white_base_in_fixture_mm": -0.099,
+  "pcb_in_fixture_mm": -22.368,
+  "watertight": {
+   "pcb": true,
+   "white_base": true,
+   "fixture": false
+  },
+  "flag": false,
+  "lowest_cad_z_mm": {
+   "pcb": 50.199,
+   "white_base": 38.6,
+   "fixture": 0.0
+  }
+ },
+ "teleop_column": "observation.state.arm.left.joint_positions",
+ "teleop_joint_dtw": {
+  "rms_rad": 0.3603,
+  "max_row_norm_rad": 1.552,
+  "duration_ratio": 1.009
+ },
+ "rerun": {
+  "status": "produced",
+  "schema_problems": [],
+  "scored": {
+   "duration_s": 241.0,
+   "samples": 7231,
+   "fixture_motion_mm": 0.0,
+   "objects": {
+    "pcb": {
+     "moved_mm": 260.2,
+     "max_speed_m_s": 0.21,
+     "max_ang_speed_rad_s": 0.5,
+     "speed_flag": false
+    },
+    "white_base": {
+     "moved_mm": 316.1,
+     "max_speed_m_s": 0.28,
+     "max_ang_speed_rad_s": 3.4,
+     "speed_flag": false
+    },
+    "fixture": {
+     "moved_mm": 0.0,
+     "max_speed_m_s": 0.0,
+     "max_ang_speed_rad_s": 0.0,
+     "speed_flag": false
+    },
+    "screw0": {
+     "moved_mm": 183.1,
+     "max_speed_m_s": 0.08,
+     "max_ang_speed_rad_s": 0.0,
+     "speed_flag": false
+    },
+    "screw1": {
+     "moved_mm": 151.7,
+     "max_speed_m_s": 0.05,
+     "max_ang_speed_rad_s": 0.0,
+     "speed_flag": false
+    },
+    "screw2": {
+     "moved_mm": 114.4,
+     "max_speed_m_s": 0.07,
+     "max_ang_speed_rad_s": 0.0,
+     "speed_flag": false
+    },
+    "screw3": {
+     "moved_mm": 229.2,
+     "max_speed_m_s": 0.08,
+     "max_ang_speed_rad_s": 0.9,
+     "speed_flag": false
+    }
+   },
+   "closest": {
+    "seat_mm": 0.237,
+    "seat_deg": 0.01,
+    "base_mm": 0.286,
+    "base_deg": 0.15,
+    "post_mm": 0.107,
+    "post_deg": 0.01
+   },
+   "final": {
+    "seat_mm": 96.62,
+    "base_mm": 0.29,
+    "base_deg": 0.05,
+    "post_mm": 0.108,
+    "post_deg": 0.01
+   },
+   "symmetric_rotation_check_deg": {
+    "base": {
+     "id": 0.05,
+     "rx180": 179.99,
+     "ry180": 179.98,
+     "rz180": 179.96
+    },
+    "post": {
+     "id": 0.01,
+     "rx180": 180.0,
+     "ry180": 180.0,
+     "rz180": 179.99
+    }
+   },
+   "screws": [
+    {
+     "screw": 0,
+     "hole": 0,
+     "final_xy_mm": 0.027,
+     "final_normal_mm": -0.1,
+     "final_tilt_deg": 0.0,
+     "start_axis_vertical_deg": 0.0,
+     "t_placed": 103.03,
+     "moved": true,
+     "placed": true
+    },
+    {
+     "screw": 1,
+     "hole": 1,
+     "final_xy_mm": 0.027,
+     "final_normal_mm": -0.1,
+     "final_tilt_deg": 0.0,
+     "start_axis_vertical_deg": 0.0,
+     "t_placed": 135.03,
+     "moved": true,
+     "placed": true
+    },
+    {
+     "screw": 2,
+     "hole": 2,
+     "final_xy_mm": 0.019,
+     "final_normal_mm": -0.1,
+     "final_tilt_deg": 0.0,
+     "start_axis_vertical_deg": 0.0,
+     "t_placed": 173.37,
+     "moved": true,
+     "placed": true
+    },
+    {
+     "screw": 3,
+     "hole": 3,
+     "final_xy_mm": 0.034,
+     "final_normal_mm": -0.1,
+     "final_tilt_deg": 0.0,
+     "start_axis_vertical_deg": 0.0,
+     "t_placed": 202.03,
+     "moved": true,
+     "placed": true
+    }
+   ],
+   "rest_range_mm": {
+    "pcb": 0.0,
+    "white_base": 0.0,
+    "fixture": 0.0,
+    "screw0": 0.0,
+    "screw1": 0.0,
+    "screw2": 0.0,
+    "screw3": 0.0
+   },
+   "retreat_joint_rad": 0.26,
+   "milestones": {
+    "M1": true,
+    "M2": true,
+    "M3": true,
+    "M4": true,
+    "M5": true
+   },
+   "event_times_s": {
+    "M1": 19.27,
+    "M2": 54.9,
+    "M3": 73.33
+   },
+   "screws_placed": 4,
+   "screw_order_times_increasing": true,
+   "gripper_range": [
+    -0.0007,
+    0.086
+   ]
+  },
+  "final_diff_mm": {
+   "pcb": 0.0,
+   "white_base": 0.0,
+   "fixture": 0.0,
+   "screw0": 0.0,
+   "screw1": 0.0,
+   "screw2": 0.0,
+   "screw3": 0.0
+  },
+  "same_length": true,
+  "max_traj_diff_mm": 0.0,
+  "reproduced": true
+ }
+}

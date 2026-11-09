@@ -522,6 +522,22 @@
       Each agent received the same inputs for the long-horizon precision assembly task, worked in an isolated container without the PhysPosterior framework,
       and was scored by the same independent scorer. Score = milestones completed, out of 5.
     </p>
+    <div class="pp-card content" id="astra-result" style="padding:1.2rem;margin-bottom:1.4rem">
+      <h3 class="title is-5">Astra (high) · 5 / 5 milestones · 4 / 4 screws</h3>
+      <p><code>gpt-6-astra</code>, high reasoning effort, using the same open-compare task card and <code>pp-agent-sandbox:20261107</code> image. The independent scorer records all five milestones and all four screws placed; its isolated rerun reproduces the saved trajectory with a maximum position difference of 0 mm.</p>
+      <div class="vgrid cols-2 stack-mobile">
+        <figure class="vtile is-sim">
+          <video controls playsinline preload="none" poster="./static/posters/astra_closeup.png" src="./static/videos/astra_overview.mp4" style="width:100%;aspect-ratio:4/3"></video>
+          <figcaption>Full 241 s simulation, original fixed overview camera; independent playback.</figcaption>
+        </figure>
+        <figure class="vtile is-sim">
+          <img src="./static/posters/astra_closeup.png" alt="Astra final assembly close-up with four placed screws" loading="lazy" style="width:100%">
+          <figcaption>Final assembly. Screws are placed, not fastened.</figcaption>
+        </figure>
+      </div>
+      <p class="small">This is a nominal execution result. The controller uses ideal simulated object-pose feedback and engineered physical parameters, including finger friction 1.0 and a 25 N finger-servo cap. Hidden-physics prediction has not been evaluated for Astra.</p>
+      <p class="small"><a href="./static/data/astra_score.json">Independent scoring record (JSON)</a> · MuJoCo 3.6.0 · no object welds or scripted object poses found in the reviewed rollout.</p>
+    </div>
     <div class="seg" id="ag-tabs" style="margin-bottom:.8rem"><button data-t="head" class="active">Head camera</button><button data-t="third">Third-person</button></div>
     <div id="ag-head">
       <div class="tl-controls" style="margin-bottom:.6rem">
@@ -621,6 +637,7 @@
         <tbody>
           <tr class="ppb-pp"><td><b>PhysPosterior</b></td><td>5 / 5</td><td class="dash">—</td><td>none found</td><td>none (0.108 mm)</td><td>0.081</td></tr>
           <tr><td>Claude Opus 5.5</td><td>5 / 5</td><td>reproduced</td><td>none</td><td>none (0.091 mm)</td><td>0.066</td></tr>
+          <tr><td><a href="#astra-result">Astra (high)</a></td><td>5 / 5</td><td>reproduced</td><td>none found</td><td>not flagged</td><td>0.360</td></tr>
           <tr><td>Kimi K3.1 Pro</td><td>0 / 5</td><td>reproduced</td><td>none</td><td>none</td><td>0.232</td></tr>
           <tr><td>GLM-5.3</td><td>0 / 5</td><td>no output</td><td>none</td><td class="dash">—</td><td>0.013</td></tr>
           <tr><td>DeepSeek V4.1 Flash</td><td>0 / 5</td><td>reproduced</td><td>none</td><td>base 2.5 mm into fixture</td><td>0.532</td></tr>
@@ -630,7 +647,8 @@
       </table>
     </div>
 
-    <h4 class="ppb-stage">Stage 2 · Sealed hidden physics, 16 worlds</h4>
+    <h4 class="ppb-stage">Stage 2 · Historical hidden-physics evaluation, 16 worlds</h4>
+    <p class="small muted">Provenance note: this 16-world evaluation used support evidence and execution outcomes generated with different code revisions. The numbers are retained as historical results; they should not be treated as a version-matched confirmation.</p>
     <p class="small muted" style="margin:-.2rem 0 .6rem">Each hidden world changes finger–board friction, board mass and finger–screw friction. Sub-task: pick the board, seat it in the fixture, release. Brier: lower is better.</p>
     <div class="table-wrap pp-card ppb-card">
       <table class="pp-table ppb-table">
@@ -639,6 +657,7 @@
           <tr class="ppb-pp"><td><b>PP posterior</b></td><td>0.77</td><td>13 / 16</td><td><b>0.054</b> [0.008, 0.124]</td></tr>
           <tr class="ppb-pp"><td>PP prior only</td><td>0.88</td><td>13 / 16</td><td>0.156 [0.016, 0.297]</td></tr>
           <tr><td>Claude Opus 5.5</td><td>1</td><td>16 / 16</td><td>0.000</td></tr>
+          <tr><td>Astra (high)</td><td class="dash">—</td><td>not evaluated</td><td class="dash">—</td></tr>
           <tr><td>Kimi K3.1 Pro</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
           <tr><td>GLM-5.3</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
           <tr><td>DeepSeek V4.1 Flash</td><td class="dash">—</td><td>fails at nominal</td><td class="dash">—</td></tr>
